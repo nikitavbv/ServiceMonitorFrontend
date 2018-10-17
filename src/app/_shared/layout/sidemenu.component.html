@@ -1,0 +1,7 @@
+<header *ngIf="auth.isLoggedIn()">
+    this is header if logged in
+</header>
+
+<header *ngIf="!auth.isLoggedIn()">
+    this is header if not logged in
+</header>
