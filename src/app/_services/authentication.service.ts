@@ -7,8 +7,15 @@ import { map } from 'rxjs/operators';
 export class AuthenticationService {
     constructor(private http: HttpClient) {}
 
+    initRequest() {
+        return this.http.get<any>('/api/v1/init')
+            .pipe(map((res:any) => {
+                return res;
+            }));
+    }
+
     login(username: string, password: string) {
-        return this.http.post<any>('/login', { username: username, password: password })
+        return this.http.post<any>('/api/v1/login', { username: username, password: password })
             .pipe(map((res:any) => {
                 if (!res) throw new Error('No server response');
                 if (!res.status) throw new Error('Invalid server response: no status');

@@ -1,19 +1,23 @@
+@import "../variables.less";
+
 div {
   font-weight: 300;
   font-size: 34pt;
-  color: #212121;
+  color: @primaryColor;
   text-align: center;
   font-family: 'Open Sans';
+  margin-top: 40px;
+  user-select: none;
 }
 
 input {
   display: block;
   width: 300px;
-  background-color: #e0e0e0;
+  background-color: @lightBackgroundColor;
   border-radius: 2px;
   padding: 8px;
   margin: 6pt auto;
-  border: 1px solid #212121;
+  border: 1px solid @primaryColor;
   font-weight: 100;
   font-size: 14pt;
   transition: border 0.4s ease-out;
@@ -30,16 +34,31 @@ button {
   font-weight: 100;
   font-family: 'Open Sans';
   margin: 6pt auto;
-  background-color: #212121;
+  background-color: @primaryColor;
   color: white;
   text-align: center;
   text-decoration: none;
   border-radius: 3px;
-  border: 1px solid #212121;
+  border: 1px solid @primaryColor;
   outline: none;
 }
 
 button:hover {
   color: #212121;
-  background-color: #eee;
+  background-color: @lightElementColor;
+}
+
+.is-invalid {
+  border: 1px solid @errorColor;
+}
+
+.login-error {
+  display: block;
+  width: 300px;
+  padding: 8px;
+  margin: 6pt auto;
+  background-color: @errorColor;
+  color: contrast(@errorColor, @lightTextColor, @darkTextColor);
+  font-size: 13pt;
+  font-weight: 500;
 }
