@@ -1,1 +1,64 @@
-/* TODO: styles for setup */
+@import "../variables.less";
+
+div {
+  font-weight: 300;
+  font-size: 34pt;
+  color: @primaryColor;
+  text-align: center;
+  font-family: 'Open Sans';
+  margin-top: 40px;
+  user-select: none;
+}
+
+input {
+  display: block;
+  width: 300px;
+  background-color: @lightBackgroundColor;
+  border-radius: 2px;
+  padding: 8px;
+  margin: 6pt auto;
+  border: 1px solid @primaryColor;
+  font-weight: 100;
+  font-size: 14pt;
+  transition: border 0.4s ease-out;
+  outline: none;
+}
+
+button {
+  cursor: pointer;
+  display: block;
+  transition: background-color 0.4s ease-out, color 0.4s ease-out;
+  width: 300px;
+  padding: 8px;
+  font-size: 13pt;
+  font-weight: 100;
+  font-family: 'Open Sans';
+  margin: 6pt auto;
+  background-color: @primaryColor;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 3px;
+  border: 1px solid @primaryColor;
+  outline: none;
+}
+
+button:hover {
+  color: #212121;
+  background-color: @lightElementColor;
+}
+
+.is-invalid {
+  border: 1px solid @errorColor;
+}
+
+.setup-error {
+  display: block;
+  width: 300px;
+  padding: 8px;
+  margin: 6pt auto;
+  background-color: @errorColor;
+  color: contrast(@errorColor, @lightTextColor, @darkTextColor);
+  font-size: 13pt;
+  font-weight: 500;
+}
