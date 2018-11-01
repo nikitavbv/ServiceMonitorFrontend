@@ -32,16 +32,17 @@ export class LoginComponent implements OnInit {
         this.authenticationService.logout();
 
         // get return url from route parameters or default to '/'
-        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';    
-    
-        this.userDataService.doInit()
+        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+
+        this.authenticationService.initRequest()
             .pipe(first())
             .subscribe(
                 data => {
                     if (data.status === 'setup_required') {
                         this.router.navigate([ '/setup' ]);
                     }
-                }
+                },
+                error => console.error(error)
             )
     }
 

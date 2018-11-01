@@ -17,30 +17,19 @@ export class SetupComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private authenticationService: AuthenticationService,
-        private userDataService: UserDataService,
         private pageTitle: PageTitleService) {}
 
     ngOnInit() {
-        this.pageTitle.removePageTitle();
-        this.setupForm = this.formBuilder.group({
+        this.pageTitle.setPageTitle('Setup');
+        this.createUserForm = this.formBuilder.group({
             username: ['', Validators.required],
             password: ['', Validators.required],
             passwordRepeat: ['', Validators.required]
         });
-    
-        this.userDataService.doInit()
-            .pipe(first())
-            .subscribe(
-                data => {
-                    if (data.status === 'setup_required') {
-                        this.router.navigate([ '/setup' ]);
-                    }
-                }
-            )
     }
 
     // convenience getter for easy access to form fields
-    get f() { return this.setupForm.controls; }
+    get f() { return this.createUserForm.controls; }
 
     onSubmit() {
         this.submitted = true;
