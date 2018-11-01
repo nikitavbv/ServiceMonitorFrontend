@@ -15,7 +15,6 @@ import { SideMenuComponent } from './_shared';
 import { HomeComponent } from './home';
 import { SetupComponent } from './setup';
 import { LoginComponent } from './login';
-import { SetupComponent } from './setup';
 
 if (environment.production) {
   enableProdMode();

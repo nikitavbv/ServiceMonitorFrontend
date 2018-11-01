@@ -7,7 +7,7 @@ import { AuthenticationService, PageTitleService, UserDataService } from '../_se
 
 @Component({ templateUrl: 'setup.component.html', styleUrls: ['./setup.component.less'] })
 export class SetupComponent implements OnInit {
-    setupForm: FormGroup;
+    createUserForm: FormGroup;
     submitted = false;
     loading = false;
     error = '';
@@ -35,7 +35,7 @@ export class SetupComponent implements OnInit {
         this.submitted = true;
 
         // stop here if form is invalid
-        if (this.setupForm.invalid) {
+        if (this.createUserForm.invalid) {
             return;
         }
 
