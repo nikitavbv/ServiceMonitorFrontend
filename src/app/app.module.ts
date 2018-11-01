@@ -14,6 +14,7 @@ import { SideMenuComponent } from './_shared';
 
 import { HomeComponent } from './home';
 import { LoginComponent } from './login';
+import { SetupComponent } from './setup';
 
 if (environment.production) {
   enableProdMode();
@@ -26,6 +27,7 @@ if (environment.production) {
 
     HomeComponent,
     LoginComponent,
+    SetupComponent
   ],
   imports: [
     BrowserModule,
