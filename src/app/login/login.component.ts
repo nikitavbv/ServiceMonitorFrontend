@@ -61,12 +61,21 @@ export class LoginComponent implements OnInit {
         this.authenticationService.login(this.f.username.value, this.f.password.value)
             .pipe(first())
             .subscribe(
-                data => {
+                result => {
+                  if (result) {
                     this.router.navigate([this.returnUrl]);
+                  } else {
+                    this.error = 'Unknown error';
+                  }
+                  this.loading = false;
                 },
                 error => {
+                  if (error.status === 401) {
+                    this.error = 'Wrong credentials';
+                  } else {
                     this.error = error.message;
-                    this.loading = false;
+                  }
+                  this.loading = false;
                 }
             )
     }
