@@ -1,8 +1,8 @@
-/* You can add global styles to this file, and also import other style files */
 body {
   background-color: #eee;
-  color: white;
+  color: #212121;
   font-family: 'Open Sans';
+  margin: 0;
 }
 
 * {
