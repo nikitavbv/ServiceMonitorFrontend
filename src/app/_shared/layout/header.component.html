@@ -1,9 +1,11 @@
 <header *ngIf="auth.isLoggedIn()">
-  <i class="fas fa-search"></i>
-  <input class="searchInput" placeholder="Search by agent name or tags..." />
+  <i *ngIf="router.url === '/'" class="fas fa-search"></i>
+  <input *ngIf="router.url === '/'" class="searchInput" placeholder="Search by agent name or tags..." />
   <div class="nav-side">
-    <a href="/">Add agent</a>
-    <a href="/">Alerts</a>
-    <a href="/">Settings</a>
+    <a href="/">Dashboard</a>
+    <a href="/add">Add agent</a>
+    <a href="/projects">Projects</a>
+    <a href="/alerts">Alerts</a>
+    <a href="/settings">Settings</a>
   </div>
 </header>

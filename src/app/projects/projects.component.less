@@ -1,0 +1,109 @@
+@import '../variables.less';
+
+@firstColumnWidth: 200px;
+@firstColumnPadding: 27px;
+@secondColumnWidth: 290px;
+
+h1 {
+  font-family: 'Open Sans';
+  color: @headerColor;
+  padding: 10px 0;
+  margin: 0;
+  width: 100%;
+  font-weight: 500;
+  font-size: 18pt;
+  user-select: none;
+}
+
+.new-project-form {
+  input {
+    display: inline-block;
+    width: 300px;
+    background-color: @lightBackgroundColor;
+    border-radius: 2px;
+    padding: 8px;
+    border: 1px solid @edgeColor;
+    font-weight: 100;
+    font-size: 14pt;
+    transition: border 0.4s ease-out;
+    outline: none;
+  }
+
+  input:focus {
+    border-color: @primaryColor;
+  }
+
+  button {
+    cursor: pointer;
+    display: inline-block;
+    transition: background-color 0.4s ease-out, color 0.4s ease-out;
+    width: 100px;
+    padding: 7px;
+    margin: 0 6px;
+    font-size: 13pt;
+    font-weight: 100;
+    font-family: 'Open Sans';
+    background-color: @primaryColor;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 3px;
+    border: 1px solid @primaryColor;
+    outline: none;
+  }
+
+  button:hover {
+    color: #212121;
+    background-color: @lightElementColor;
+  }
+}
+
+.projects-list {
+  box-sizing: border-box;
+  width: 100%;
+  color: @primaryColor;
+  user-select: none;
+
+  .project {
+    border: 1px solid @tableEdgeColor;
+    box-shadow: 1px 2px 4px rgba(0, 0, 0, .03);
+    font-size: 16px;
+    line-height: 50px;
+    border-bottom: 0;
+    font-weight: 500;
+    transition: box-shadow 0.4s ease-out;
+
+    .project-name {
+      padding-left: @firstColumnPadding;
+      width: @firstColumnWidth;
+    }
+
+    .project-id {
+      padding-left: 4px;
+      width: @secondColumnWidth;
+    }
+
+    .project-name, .project-id {
+      height: 50px;
+      display: inline-block;
+      cursor: pointer;
+      vertical-align: middle;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+  }
+
+  .project:first-of-type {
+    border-radius: 3px 3px 0;
+  }
+
+  .project:last-of-type {
+    border-radius: 0 0 3px 3px;
+    border-bottom: 1px solid @tableEdgeColor;
+  }
+
+  .project:hover {
+    box-shadow: 9px 6px 12px rgba(0, 0, 0, .09);
+  }
+}

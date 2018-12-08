@@ -1,15 +1,18 @@
 @import "../../variables.less";
 
+@headerHeight: 50px;
+
 header {
   width: 100%;
   padding: 4px 200px;
   color: @lowPriorityTextColor;
   border-bottom: 1px solid @tableEdgeColor;
+  height: calc(@headerHeight + 8px);
 
   .searchInput {
     width: 66.666667%;
     border: 0;
-    height: 50px;
+    height: @headerHeight;
     padding: 10px;
     border-radius: 2px;
     font-size: 15px;
@@ -34,6 +37,7 @@ header {
       color: inherit;
       transition: all 0.4s ease-out;
       user-select: none;
+      height: @headerHeight;
     }
 
     a:hover {

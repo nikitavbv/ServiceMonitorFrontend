@@ -13,6 +13,7 @@ import { AuthenticationService, PageTitleService, UserDataService } from './_ser
 import { HeaderComponent } from './_shared';
 
 import { HomeComponent } from './home';
+import { ProjectsComponent } from './projects';
 import { SetupComponent } from './setup';
 import { LoginComponent } from './login';
 
@@ -26,6 +27,7 @@ if (environment.production) {
     HeaderComponent,
 
     HomeComponent,
+    ProjectsComponent,
     SetupComponent,
     LoginComponent,
     SetupComponent
