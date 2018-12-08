@@ -10,7 +10,7 @@ import { AuthGuard } from './_guards';
 import { JwtInterceptor } from './_helpers';
 import { AuthenticationService, PageTitleService, UserDataService } from './_services';
 
-import { SideMenuComponent } from './_shared';
+import { HeaderComponent } from './_shared';
 
 import { HomeComponent } from './home';
 import { SetupComponent } from './setup';
@@ -23,7 +23,7 @@ if (environment.production) {
 @NgModule({
   declarations: [
     AppComponent,
-    SideMenuComponent,
+    HeaderComponent,
 
     HomeComponent,
     SetupComponent,

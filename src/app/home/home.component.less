@@ -1,1 +1,136 @@
-/* TODO: styles for home */
+@import "../variables.less";
+
+@firstColumnWidth: 200px;
+@firstColumnPadding: 27px;
+@secondColumnWidth: 290px;
+@starWidth: 40px;
+
+h1 {
+  font-family: 'Open Sans';
+  color: @headerColor;
+  padding: 10px 0;
+  margin: 0;
+  width: 100%;
+  font-weight: 500;
+  font-size: 18pt;
+  user-select: none;
+}
+
+.agent-list {
+  box-sizing: border-box;
+  width: 100%;
+  color: @primaryColor;
+  user-select: none;
+
+  .agent {
+    border: 1px solid @tableEdgeColor;
+    box-shadow: 1px 2px 4px rgba(0,0,0,.03);
+    font-size: 16px;
+    line-height: 50px;
+    border-bottom: 0;
+    font-weight: 500;
+    transition: box-shadow 0.4s ease-out;
+
+    .agent-name {
+      padding-left: 27px;
+      width: @firstColumnWidth;
+    }
+
+    .agent-status {
+      padding-left: 4px;
+      width: @secondColumnWidth;
+    }
+
+    .agent-name, .agent-status {
+      height: 50px;
+      display: inline-block;
+      cursor: pointer;
+      vertical-align: middle;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    > .fa-star {
+      opacity: 0;
+      transition: opacity 0.4s ease-out;
+      cursor: pointer;
+      width: @starWidth;
+    }
+
+    .agent-status[data-status="online"] {
+      color: @statusOKColor;
+    }
+
+    .agent-status[data-status="offline"] {
+      color: @statusBadColor;
+    }
+
+    .agent-details {
+      display: block;
+      padding: 0 @firstColumnPadding;
+      background-color: lighten(@tableEdgeColor, 10%);
+      font-size: 14px;
+
+      .agent-metric-name {
+        width: calc(@firstColumnWidth - @firstColumnPadding);
+      }
+
+      .agent-metric-summary {
+        width: @secondColumnWidth;
+      }
+
+      .agent-metric-name, .agent-metric-summary {
+        display: inline-block;
+        vertical-align: middle;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+
+      .fa-star {
+        opacity: 0;
+        transition: all 0.4s ease-out;
+        cursor: pointer;
+      }
+
+      .agent-metric:hover {
+        .fa-star {
+          opacity: 1;
+        }
+      }
+    }
+
+    .agent-tags {
+      display: inline-block;
+
+      .agent-tag {
+        display: inline;
+        background-color: @tagColor;
+        border-color: @tagColor;
+        color: @lowPriorityTextColor;
+        border-radius: 3px;
+        padding: 4px 8px;
+        margin-right: 6px;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .agent:first-of-type {
+    border-radius: 3px 3px 0;
+  }
+
+  .agent:last-of-type {
+    border-radius: 0 0 3px 3px;
+    border-bottom: 1px solid @tableEdgeColor;
+  }
+
+  .agent:hover {
+    box-shadow: 9px 6px 12px rgba(0,0,0,.09);
+
+    > .fa-star {
+      opacity: 1;
+    }
+  }
+}

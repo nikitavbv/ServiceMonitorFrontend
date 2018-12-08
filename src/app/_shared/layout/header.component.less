@@ -1,0 +1,47 @@
+@import "../../variables.less";
+
+header {
+  width: 100%;
+  padding: 4px 200px;
+  color: @lowPriorityTextColor;
+  border-bottom: 1px solid @tableEdgeColor;
+
+  .searchInput {
+    width: 66.666667%;
+    border: 0;
+    height: 50px;
+    padding: 10px;
+    border-radius: 2px;
+    font-size: 15px;
+    cursor: text;
+    outline: none;
+  }
+
+  .searchInput, i {
+    transition: color 0.4s ease-out;
+  }
+
+  .nav-side {
+    float: right;
+    padding: 4px 0;
+    height: 42px;
+    line-height: 42px;
+    display: inline-block;
+
+    a {
+      padding: 4px 8px;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.4s ease-out;
+      user-select: none;
+    }
+
+    a:hover {
+      color: @primaryColor;
+    }
+  }
+}
+
+header:focus-within {
+  color: @primaryColor;
+}
