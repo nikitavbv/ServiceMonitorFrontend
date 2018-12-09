@@ -8,11 +8,17 @@ import { AppComponent } from './app.component';
 import { routing } from './app.routing';
 import { AuthGuard } from './_guards';
 import { JwtInterceptor } from './_helpers';
-import { AuthenticationService, PageTitleService, UserDataService } from './_services';
+import {
+  AuthenticationService,
+  PageTitleService,
+  ProjectService,
+  UserDataService,
+} from './_services';
 
 import { HeaderComponent } from './_shared';
 
 import { HomeComponent } from './home';
+import { AddAgentComponent } from './addAgent';
 import { ProjectsComponent } from './projects';
 import { SetupComponent } from './setup';
 import { LoginComponent } from './login';
@@ -27,6 +33,7 @@ if (environment.production) {
     HeaderComponent,
 
     HomeComponent,
+    AddAgentComponent,
     ProjectsComponent,
     SetupComponent,
     LoginComponent,
@@ -44,6 +51,7 @@ if (environment.production) {
     AuthenticationService,
     UserDataService,
     PageTitleService,
+    ProjectService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,
