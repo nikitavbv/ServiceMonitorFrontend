@@ -3,7 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
 import { UserDataService } from './userdata.service';
-import { Project, CreateProjectResponse, ProjectListResponse } from '../_models';
+import {
+  Project,
+  CreateProjectResponse,
+  ProjectListResponse,
+  DeleteProjectResponse
+} from '../_models';
 
 @Injectable()
 export class ProjectService {
@@ -29,6 +34,13 @@ export class ProjectService {
     return this.http.put<any>(`/api/v1/project/${project.id}`, { name }).pipe(map((res:any) => {
       project.name = name;
       return project;
+    }));
+  }
+
+  deleteProject(project: Project) {
+    return this.http.delete<DeleteProjectResponse>(`/api/v1/project/${project.id}`).pipe(map((res:DeleteProjectResponse) => {
+      this.userDataService.projects = res.projects;
+      return res;
     }));
   }
 

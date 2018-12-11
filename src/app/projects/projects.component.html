@@ -9,6 +9,8 @@
       <h2>Rename project</h2>
       <input [(ngModel)]="updatedProjectNames[project.id]" placeholder="New name..." />
       <button (click)="renameProject(project)">Rename</button>
+      <h2>Delete project</h2>
+      <button (click)="deleteProject(project)" class="delete-project-btn">Delete</button>
     </div>
   </div>
 </div>

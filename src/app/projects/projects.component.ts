@@ -53,4 +53,8 @@ export class ProjectsComponent implements OnInit {
     );
   }
 
+  deleteProject(project: Project) {
+    this.projectService.deleteProject(project).pipe(first()).subscribe(...this.defaultSubscribe);
+  }
+
 }
