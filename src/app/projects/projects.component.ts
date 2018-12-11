@@ -7,10 +7,18 @@ import {
   UserDataService,
 } from '../_services';
 
+import {
+  Project
+} from '../_models';
+
 @Component({templateUrl: 'projects.component.html', styleUrls: ['projects.component.less']})
 export class ProjectsComponent implements OnInit {
 
   newProjectName: string = '';
+  expandedProjectID: number = -1;
+  updatedProjectNames: any = {};
+
+  defaultSubscribe = [data => {}, error => console.error(error)];
 
   constructor(
     private pageTitle: PageTitleService,
@@ -20,15 +28,29 @@ export class ProjectsComponent implements OnInit {
 
   ngOnInit() {
     this.pageTitle.setPageTitle('Projects');
-    this.projectService.getAllProjects().pipe(first()).subscribe(data => {
-      // this.projects = data.projects;
-    }, error => console.error(error));
+    this.projectService.getAllProjects().pipe(first()).subscribe(
+      ...this.defaultSubscribe
+    );
   }
 
   createProject() {
-    this.projectService.createProject(this.newProjectName).pipe(first()).subscribe(data => {
-      console.log(data);
-    }, error => console.error(error));
+    this.projectService.createProject(this.newProjectName).pipe(first()).subscribe(
+      ...this.defaultSubscribe
+    );
+  }
+
+  showProjectExpanded(project: Project) {
+    if (this.expandedProjectID === project.id) {
+      this.expandedProjectID = -1;
+    } else {
+      this.expandedProjectID = project.id;
+    }
+  }
+
+  renameProject(project: Project) {
+    this.projectService.rename(project, this.updatedProjectNames[project.id]).pipe(first()).subscribe(
+      ...this.defaultSubscribe
+    );
   }
 
 }

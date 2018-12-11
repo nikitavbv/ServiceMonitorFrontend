@@ -1,8 +1,15 @@
 <h1>Projects</h1>
 <div class="projects-list">
-  <div *ngFor="let project of userDataService.projects" class="project">
-    <div class="project-name">{{ project.name }}</div>
-    <div class="project-id">{{ project.apiKey }}</div>
+  <div *ngFor="let project of userDataService.projects" class="project" class="project" [ngClass]="{'expanded': expandedProjectID === project.id}">
+    <div class="project-top-info" (click)="showProjectExpanded(project)">
+      <div class="project-name">{{ project.name }}</div>
+      <div class="project-id">{{ project.apiKey }}</div>
+    </div>
+    <div class="project-details">
+      <h2>Rename project</h2>
+      <input [(ngModel)]="updatedProjectNames[project.id]" placeholder="New name..." />
+      <button (click)="renameProject(project)">Rename</button>
+    </div>
   </div>
 </div>
 

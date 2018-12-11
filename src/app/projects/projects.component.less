@@ -4,58 +4,66 @@
 @firstColumnPadding: 27px;
 @secondColumnWidth: 340px;
 
-h1 {
+h1, h2 {
+  margin: 0;
   font-family: 'Open Sans';
   color: @headerColor;
-  padding: 10px 0;
-  margin: 0;
   width: 100%;
+}
+
+h1 {
+  padding: 10px 0;
   font-weight: 500;
   font-size: 18pt;
   user-select: none;
 }
 
-.new-project-form {
-  input {
-    display: inline-block;
-    width: 300px;
-    background-color: @lightBackgroundColor;
-    border-radius: 2px;
-    padding: 8px;
-    border: 1px solid @edgeColor;
-    font-weight: 100;
-    font-size: 14pt;
-    transition: border 0.4s ease-out;
-    outline: none;
-  }
+h2 {
+  font-weight: 300;
+  font-size: 16pt;
+  padding: 0;
+}
 
-  input:focus {
-    border-color: @primaryColor;
-  }
+input {
+  display: inline-block;
+  width: 300px;
+  background-color: @lightBackgroundColor;
+  border-radius: 2px;
+  padding: 8px;
+  border: 1px solid @edgeColor;
+  font-weight: 100;
+  font-size: 14pt;
+  transition: border 0.4s ease-out;
+  outline: none;
+  color: @primaryColor;
+}
 
-  button {
-    cursor: pointer;
-    display: inline-block;
-    transition: background-color 0.4s ease-out, color 0.4s ease-out;
-    width: 100px;
-    padding: 7px;
-    margin: 0 6px;
-    font-size: 13pt;
-    font-weight: 100;
-    font-family: 'Open Sans';
-    background-color: @primaryColor;
-    color: white;
-    text-align: center;
-    text-decoration: none;
-    border-radius: 3px;
-    border: 1px solid @primaryColor;
-    outline: none;
-  }
+input:focus {
+  border-color: @primaryColor;
+}
 
-  button:hover {
-    color: #212121;
-    background-color: @lightElementColor;
-  }
+button {
+  cursor: pointer;
+  display: inline-block;
+  transition: background-color 0.4s ease-out, color 0.4s ease-out;
+  width: 100px;
+  padding: 7px;
+  margin: 0 6px;
+  font-size: 13pt;
+  font-weight: 100;
+  font-family: 'Open Sans';
+  background-color: @primaryColor;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 3px;
+  border: 1px solid @primaryColor;
+  outline: none;
+}
+
+button:hover {
+  color: #212121;
+  background-color: @lightElementColor;
 }
 
 .projects-list {
@@ -91,6 +99,22 @@ h1 {
       text-overflow: ellipsis;
       overflow: hidden;
       white-space: nowrap;
+    }
+
+    .project-details {
+      padding-left: @firstColumnPadding;
+      max-height: 0;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.4s ease-out;
+    }
+  }
+
+  .project.expanded {
+    .project-details {
+      pointer-events: inherit;
+      max-height: 500px;
+      opacity: 1;
     }
   }
 

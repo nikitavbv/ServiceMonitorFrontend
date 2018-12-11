@@ -25,4 +25,11 @@ export class ProjectService {
     }));
   }
 
+  rename(project: Project, name: string) {
+    return this.http.put<any>(`/api/v1/project/${project.id}`, { name }).pipe(map((res:any) => {
+      project.name = name;
+      return project;
+    }));
+  }
+
 }
