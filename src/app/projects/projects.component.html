@@ -1,13 +1,13 @@
 <h1>Projects</h1>
 <div class="projects-list">
-  <div class="project">
-    <div class="project-name">My first project</div>
-    <div class="project-id">a12a34a56f1124d1390bdf</div>
+  <div *ngFor="let project of userDataService.projects" class="project">
+    <div class="project-name">{{ project.name }}</div>
+    <div class="project-id">{{ project.apiKey }}</div>
   </div>
 </div>
 
 <h1>Create new</h1>
 <div class="new-project-form">
-  <input placeholder="New project name..."/>
-  <button>Create</button>
+  <input [(ngModel)]="newProjectName" placeholder="New project name..."/>
+  <button (click)="createProject()">Create</button>
 </div>

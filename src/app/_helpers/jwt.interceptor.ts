@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 @Injectable()
@@ -39,7 +39,7 @@ export class JwtInterceptor implements HttpInterceptor {
 
         if (response.body.status === 'error') {
           let error = response.body.error;
-          if (error === 'auth_failed') {
+          if (error === 'auth_failed' || error === 'Access Denied') {
             localStorage.removeItem('currentUser');
             this.router.navigate(['/login', { returnUrl: this.router.url }]);
             return data;
@@ -47,7 +47,14 @@ export class JwtInterceptor implements HttpInterceptor {
         }
       }
       return data;
-    }));
+    })).pipe(catchError((result => {
+      if (result.status === 403) {
+        localStorage.removeItem('currentUser');
+        this.router.navigate(['/login', { returnUrl: this.router.url }]);
+      }
+
+      return Observable.throw(result);
+    })));
   }
 
 }
