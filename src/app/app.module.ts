@@ -9,6 +9,7 @@ import { routing } from './app.routing';
 import { AuthGuard } from './_guards';
 import { JwtInterceptor } from './_helpers';
 import {
+  AgentService,
   AuthenticationService,
   PageTitleService,
   ProjectService,
@@ -22,6 +23,7 @@ import { AddAgentComponent } from './addAgent';
 import { ProjectsComponent } from './projects';
 import { SetupComponent } from './setup';
 import { LoginComponent } from './login';
+import { MetricComponent } from './metric';
 
 if (environment.production) {
   enableProdMode();
@@ -37,6 +39,7 @@ if (environment.production) {
     ProjectsComponent,
     SetupComponent,
     LoginComponent,
+    MetricComponent,
     SetupComponent
   ],
   imports: [
@@ -48,6 +51,7 @@ if (environment.production) {
   ],
   providers: [
     AuthGuard,
+    AgentService,
     AuthenticationService,
     UserDataService,
     PageTitleService,
