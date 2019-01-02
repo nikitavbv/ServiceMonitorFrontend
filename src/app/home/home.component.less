@@ -41,6 +41,10 @@ h1 {
       width: @secondColumnWidth;
     }
 
+    .agent-info {
+        user-select: text;
+    }
+
     .agent-name, .agent-status {
       height: 50px;
       display: inline-block;
@@ -71,6 +75,10 @@ h1 {
       padding: 0 @firstColumnPadding;
       background-color: lighten(@tableEdgeColor, 10%);
       font-size: 14px;
+      max-height: 0;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.4s ease-out;
 
       .agent-metric-name {
         width: calc(@firstColumnWidth - @firstColumnPadding);
@@ -114,6 +122,14 @@ h1 {
         margin-right: 6px;
         cursor: pointer;
       }
+    }
+  }
+
+  .agent.expanded {
+    .agent-details {
+      pointer-events: inherit;
+      max-height: 1000px;
+      opacity: 1;
     }
   }
 

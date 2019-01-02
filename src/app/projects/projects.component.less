@@ -106,14 +106,6 @@ button:hover {
       opacity: 0;
       pointer-events: none;
       transition: all 0.4s ease-out;
-    }
-  }
-
-  .project.expanded {
-    .project-details {
-      pointer-events: inherit;
-      max-height: 500px;
-      opacity: 1;
 
       .delete-project-btn {
         background-color: @dangerColor;
@@ -124,6 +116,14 @@ button:hover {
         background-color: white;
         color: @dangerColor;
       }
+    }
+  }
+
+  .project.expanded {
+    .project-details {
+      pointer-events: inherit;
+      max-height: 500px;
+      opacity: 1;
     }
   }
 

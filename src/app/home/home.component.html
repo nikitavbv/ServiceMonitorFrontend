@@ -1,33 +1,23 @@
-<h1>Starred</h1>
-
+<h1>All agents</h1>
 <div class="agent-list">
-  <div class="agent">
-    <div class="agent-name">my server</div>
-    <div class="agent-status" data-status="online">online</div>
-    <div class="fas fa-star"></div>
-    <div class="agent-tags">
-      <div class="agent-tag">first tag</div>
-      <div class="agent-tag">second tag</div>
+  <div *ngFor="let agent of userData.agents" class="agent" [ngClass]="{'expanded': expandedAgentID === agent.id}">
+    <div class="agent-bar" (click)="showAgentExpanded(agent)">
+      <div class="agent-name">{{ agent.name }}</div>
+      <div class="agent-status" data-status="online">online</div>
+      <div class="agent-tags">
+        <div class="agent-tag">first tag</div>
+        <div class="agent-tag">second tag</div>
+      </div>
     </div>
-  </div>
-</div>
-
-<h1>All</h1>
-
-<div class="agent-list">
-  <div class="agent">
-    <div class="agent-name">my server with expanded details</div>
-    <div class="agent-status" data-status="online">online</div>
-    <div class="far fa-star"></div>
     <div class="agent-details">
       <div class="agent-info">
-        IPv4: 123.45.67.23
+        IPv4: {{ json.parse(agent.properties.ipv4).join(', ') }}
       </div>
       <div class="agent-info">
-        IPv6: 1a01:b1b1:3:c0::c41:4001
+        IPv6: {{ json.parse(agent.properties.ipv6).join(', ') }}
       </div>
       <div class="agent-info">
-        OS: Ubuntu 18.04.1 LTS
+        OS: {{ agent.properties.os }}
       </div>
       <div class="agent-tags">
         <div class="agent-tag">first tag</div>
@@ -35,7 +25,12 @@
         <div class="agent-tag">third tag</div>
         <div class="agent-tag">tag with some long text...</div>
       </div>
-      <div class="agent-metric">
+      <div *ngFor="let metricType of Object.keys(agent.metrics)" class="agent-metric">
+          <div class="agent-metric-name">{{ getMetricNameByType(metricType) }}</div>
+          <div class="agent-metric-summary">{{ getMetricSummaryFor(metricType, agent.metrics[metricType]) }}</div>
+          <div class="far fa-star"></div>
+      </div>
+      <!--<div class="agent-metric">
         <div class="agent-metric-name">Disk I/O</div>
         <div class="agent-metric-summary">up 10.4mb/s down 5.4mb/s</div>
         <div class="far fa-star"></div>
@@ -69,27 +64,7 @@
         <div class="agent-metric-name">Uptime</div>
         <div class="agent-metric-summary">2 weeks 4 days</div>
         <div class="far fa-star"></div>
-      </div>
+    </div>-->
     </div>
-  </div>
-  <div class="agent">
-    <div class="agent-name">my other server</div>
-    <div class="agent-status" data-status="offline">offline</div>
-    <div class="far fa-star"></div>
-  </div>
-  <div class="agent">
-    <div class="agent-name">my server</div>
-    <div class="agent-status" data-status="online">online</div>
-    <div class="far fa-star"></div>
-  </div>
-  <div class="agent">
-    <div class="agent-name">Some API endpoint</div>
-    <div class="agent-status" data-status="online">uptime 99.7%, avg. resp.time: 48.6ms</div>
-    <div class="far fa-star"></div>
-  </div>
-  <div class="agent">
-    <div class="agent-name">Some event</div>
-    <div class="agent-status">198/hour</div>
-    <div class="far fa-star"></div>
   </div>
 </div>

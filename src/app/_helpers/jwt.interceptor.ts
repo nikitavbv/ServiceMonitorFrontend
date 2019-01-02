@@ -37,6 +37,12 @@ export class JwtInterceptor implements HttpInterceptor {
         let response = data as any;
         if (response.body === null) return data;
 
+        if (response.body.status === 'auth_required') {
+          localStorage.removeItem('currentUser');
+          this.router.navigate(['/login', { returnUrl: this.router.url }]);
+          return data;
+        }
+
         if (response.body.status === 'error') {
           let error = response.body.error;
           if (error === 'auth_failed' || error === 'Access Denied') {
