@@ -25,11 +25,11 @@
         <div class="agent-tag">third tag</div>
         <div class="agent-tag">tag with some long text...</div>
       </div>
-      <a *ngFor="let metricType of Object.keys(agent.metrics)" href="/agent/{{ agent.id }}/metric/{{ agent.metrics[metricType].id }}" class="agent-metric">
+      <div *ngFor="let metricType of Object.keys(agent.metrics)" (click)="openMetricPage(agent.id, agent.metrics[metricType].id)" class="agent-metric">
         <div class="agent-metric-name">{{ getMetricNameByType(metricType) }}</div>
         <div class="agent-metric-summary">{{ getMetricSummaryFor(metricType, agent.metrics[metricType]) }}</div>
-        <div class="far fa-star"></div>
-      </a>
+        <div (click)="starMetric(agent.id, agent.metrics[metricType].id, $event);" class="far fa-star"></div>
+      </div>
       <!--<div class="agent-metric">
         <div class="agent-metric-name">Disk I/O</div>
         <div class="agent-metric-summary">up 10.4mb/s down 5.4mb/s</div>

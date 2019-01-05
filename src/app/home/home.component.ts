@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 import { PageTitleService, UserDataService } from '../_services';
 
@@ -15,17 +16,29 @@ export class HomeComponent implements OnInit {
 
     expandedAgentID = -1;
 
-    constructor(private pageTitle: PageTitleService, private userData: UserDataService) {}
+    constructor(
+        private router: Router,
+        private pageTitle: PageTitleService, 
+        private userData: UserDataService
+    ) {}
 
     ngOnInit() {
         this.pageTitle.setPageTitle('Home');
-        this.userData.doInit().subscribe(data => {
-            console.log(this.userData.agents);
-        }, error => console.error(error));
+        this.userData.doInit().subscribe(() => {}, error => console.error(error));
     }
 
     showAgentExpanded(agent) {
         this.expandedAgentID = agent.id;
+    }
+
+    openMetricPage(agentID: number, metricID: number, event) {
+        console.log('metric page', agentID, metricID);
+        this.router.navigate([`agent/${agentID}/metric/${metricID}`]);
+    }
+
+    starMetric(agentID: number, metricID: number, event) {
+        console.log('star', {agentID, metricID});
+        event.stopPropagation();
     }
 
     /**
