@@ -1,3 +1,12 @@
+<div *ngFor="let project of userData.projects" class="metric-list">
+  <h1 *ngIf="project.starredMetrics.length > 0">{{ project.name }}</h1>
+  <div *ngFor="let metricID of project.starredMetrics" class="metric" (click)="openMetricPage(getAgentByMetricID(metricID).id, metricID)">
+    <div class="metric-name">{{ getMetricNameByType(getMetricByID(metricID).type) }}<span class="metric-agent">@Ubuntu 18.04.1 LTS</span></div>
+    <div class="metric-summary">{{ getMetricSummaryFor(getMetricByID(metricID)) }}</div>
+    <div (click)="unstarMetric(getAgentByMetricID(metricID).id, getMetricByID(metricID), $event);" class="fa fa-star"></div>
+  </div>
+</div>
+
 <h1>All agents</h1>
 <div class="agent-list">
   <div *ngFor="let agent of userData.agents" class="agent" [ngClass]="{'expanded': expandedAgentID === agent.id}">
@@ -27,8 +36,8 @@
       </div>
       <div *ngFor="let metricType of Object.keys(agent.metrics)" (click)="openMetricPage(agent.id, agent.metrics[metricType].id)" class="agent-metric">
         <div class="agent-metric-name">{{ getMetricNameByType(metricType) }}</div>
-        <div class="agent-metric-summary">{{ getMetricSummaryFor(metricType, agent.metrics[metricType]) }}</div>
-        <div (click)="starMetric(agent.id, agent.metrics[metricType].id, $event);" class="far fa-star"></div>
+        <div class="agent-metric-summary">{{ getMetricSummaryFor(agent.metrics[metricType]) }}</div>
+        <div (click)="isStarredMetric(agent.metrics[metricType]) ? unstarMetric(agent.id, agent.metrics[metricType], $event) : starMetric(agent.id, agent.metrics[metricType], $event);" class="fa-star" [ngClass]="{'far': !isStarredMetric(agent.metrics[metricType]), 'fa': isStarredMetric(agent.metrics[metricType]) }"></div>
       </div>
       <!--<div class="agent-metric">
         <div class="agent-metric-name">Disk I/O</div>

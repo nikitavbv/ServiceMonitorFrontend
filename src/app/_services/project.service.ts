@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { UserDataService } from './userdata.service';
 import {
   Project,
+  Metric,
   CreateProjectResponse,
   ProjectListResponse,
   DeleteProjectResponse
@@ -41,6 +42,32 @@ export class ProjectService {
     return this.http.delete<DeleteProjectResponse>(`/api/v1/project/${project.id}`).pipe(map((res:DeleteProjectResponse) => {
       this.userDataService.projects = res.projects;
       return res;
+    }));
+  }
+
+  starMetric(projectID: number, metric: Metric) {
+    return this.http.put<any>(`/api/v1/project/${projectID}/starMetric`, { metricID: metric.id }).pipe(map((res:any) => {
+      this.userDataService.projects.forEach((project) => {
+        if (project.id === projectID) {
+          if (!project.starredMetrics.includes(metric.id)) {
+            project.starredMetrics.push(metric.id);
+          }
+        }
+      });
+      return res;
+    }));
+  }
+
+  unstarMetric(projectID: number, metric: Metric) {
+    return this.http.put<any>(`/api/v1/project/${projectID}/unstarMetric`, { metricID: metric.id }).pipe(map((res:any) => {
+      this.userDataService.projects.forEach((project) => {
+        if (project.id === projectID) {
+          let metricIndex = project.starredMetrics.indexOf(metric.id);
+          if (metricIndex !== -1) {
+            project.starredMetrics.splice(metricIndex, 1);
+          }
+        }
+      });
     }));
   }
 

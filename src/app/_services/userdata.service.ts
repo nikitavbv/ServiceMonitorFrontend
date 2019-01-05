@@ -14,6 +14,7 @@ export class UserDataService {
 
     doInit () {
         return this.http.get<InitResponse>('/api/v1/init').pipe(map((res:InitResponse) => {
+          this.projects = res.projects;
           this.agents = res.agents;
           this.makeMetricsList();
         }));
