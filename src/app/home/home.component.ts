@@ -28,9 +28,35 @@ export class HomeComponent implements OnInit {
         this.expandedAgentID = agent.id;
     }
 
-    byteSizeToStr(n) {
-        // TODO: implement this
-        return '2GB';
+    /**
+     * Convert number bytes to text
+     * Use base-10 for:
+     *  - network bandwidth
+     *  - disk sizes
+     * Use base-2 for:
+     *  - ram
+     * 
+     * @param n 
+     * @param base
+     */
+    byteSizeToStr(n, base=1000) {
+        if (n <= base) {
+            return `${Math.round(n * 100) / 100} bytes`;
+        }
+        n /= base;
+        if (n <= base) {
+            return `${Math.round(n * 100) / 100} KB`;
+        }
+        n /= base;
+        if (n <= base) {
+            return `${Math.round(n * 100) / 100} MB`;
+        }
+        n /= base;
+        if (n <= base) {
+            return `${Math.round(n * 100) / 100} GB`;
+        }
+        n /= base;
+        return `${Math.round(n * 100) / 100} TB`;
     }
 
     getMetricNameByType(metricType) {
@@ -50,7 +76,8 @@ export class HomeComponent implements OnInit {
     }
 
     getMemoryMetricSummary(metricData) {
-        return this.byteSizeToStr(metricData.total - metricData.used) + '/' + this.byteSizeToStr(metricData.total);
+        return this.byteSizeToStr((metricData.total - metricData.free)*1024, 1024) + 
+            '/' + this.byteSizeToStr(metricData.total*1024, 1024);
     }
 
 }
