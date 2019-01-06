@@ -1,1 +1,13 @@
-<h1>Add agent</h1>
+<h1><b>Step 1</b>: Choose project</h1>
+<select [(ngModel)]="selectedProject">
+    <option *ngFor="let project of this.userData.projects" [value]="project.apiKey">{{ project.name }}</option>
+</select>
+
+<h1><b>Step 2</b>: Add agent</h1>
+
+<h1><b>OR</b>: Add HTTP endpoint tracking</h1>
+<div class="add-endpoint-form">
+    <input [(ngModel)]="endpointName" placeholder="Endpoint name, e.g. Auth API" />
+    <input [(ngModel)]="endpointToTrack" placeholder="http://your_endpoint_address" />
+    <button (click)="addEndpoint()">Add</button>
+</div>

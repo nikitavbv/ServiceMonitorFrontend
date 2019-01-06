@@ -12,21 +12,24 @@
   <div *ngFor="let agent of userData.agents" class="agent" [ngClass]="{'expanded': expandedAgentID === agent.id}">
     <div class="agent-bar" (click)="showAgentExpanded(agent)">
       <div class="agent-name">{{ agent.name }}</div>
-      <div class="agent-status" [ngClass]="{'online': isOnline(agent), 'offline': !isOnline(agent)}">{{ isOnline(agent) ? 'online' : 'offline' }}</div>
+      <div class="agent-status" [ngClass]="{'online': isOnline(agent), 'offline': !isOnline(agent)}">{{ getStatusText(agent) }}</div>
       <div class="agent-tags">
         <div class="agent-tag">first tag</div>
         <div class="agent-tag">second tag</div>
       </div>
     </div>
     <div class="agent-details">
-      <div class="agent-info">
+      <div class="agent-info" *ngIf="agent.type === 'generic'">
         IPv4: {{ json.parse(agent.properties.ipv4).join(', ') }}
       </div>
-      <div class="agent-info">
+      <div class="agent-info" *ngIf="agent.type === 'generic'">
         IPv6: {{ json.parse(agent.properties.ipv6).join(', ') }}
       </div>
-      <div class="agent-info">
+      <div class="agent-info" *ngIf="agent.type === 'generic'">
         OS: {{ agent.properties.os }}
+      </div>
+      <div class="agent-info" *ngIf="agent.type === 'endpoint'">
+        Endpoint: <a href="{{ agent.properties.endpoint }}">{{ agent.properties.endpoint }}</a>
       </div>
       <div class="agent-tags">
         <div class="agent-tag">first tag</div>

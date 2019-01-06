@@ -18,7 +18,7 @@ export class ProjectsComponent implements OnInit {
   expandedProjectID: number = -1;
   updatedProjectNames: any = {};
 
-  defaultSubscribe = [data => {}, error => console.error(error)];
+  defaultSubscribe = [data => {}, console.error];
 
   constructor(
     private pageTitle: PageTitleService,

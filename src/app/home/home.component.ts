@@ -76,9 +76,43 @@ export class HomeComponent implements OnInit {
     }
 
     isOnline(agent: Agent) {
+        if (agent.type === 'endpoint') {
+            return this.isEndpointOnline(agent);
+        }
+
+        if (agent.metrics.length === 0) {
+            return false;
+        }
+
         let newestMetric = Object.values(agent.metrics)
             .reduce((m1, m2) => new Date(m1.timestamp).getTime() > new Date(m2.timestamp).getTime() ? m1 : m2);
         return new Date().getTime() - new Date(newestMetric.timestamp).getTime() < this.ONLINE_INTERVAL;
+    }
+
+    getStatusText(agent: Agent) {
+        if (agent.type == 'endpoint') {
+            return this.getEndpointStatus(agent);
+        }
+
+        if (agent.metrics.length === 0) {
+            return 'no metrics';
+        }
+
+        if (this.isOnline(agent)) {
+            return 'online';
+        } else {
+            return 'offline';
+        }
+    }
+
+    isEndpointOnline(agent: Agent) {
+        return agent.properties.totalErrors == 0;
+    }
+
+    getEndpointStatus(agent: Agent) {
+        let uptime = (agent.properties.totalRequests - agent.properties.totalErrors) / agent.properties.totalRequests * 100;
+        let avgRespTime = agent.properties.totalTime / agent.properties.totalRequests;
+        return `uptime ${Math.round(uptime * 100) / 100}%, avg. resp. time: ${Math.round(avgRespTime*100) / 100}ms`;
     }
 
     /**
@@ -269,7 +303,7 @@ export class HomeComponent implements OnInit {
     }
 
     getMysqlMetricSummary(metricData) {
-        return metricData.Questions + ' queries/s';
+        return (Math.round(metricData.Questions * 100) / 100) + ' queries/s';
     }
 
 }

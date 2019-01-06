@@ -1,0 +1,56 @@
+@import "../variables.less";
+
+h1 {
+  font-family: 'Open Sans';
+  color: @headerColor;
+  padding: 10px 0;
+  margin: 0;
+  width: 100%;
+  font-weight: 500;
+  font-size: 18pt;
+  user-select: none;
+}
+
+input, select {
+    display: inline-block;
+    width: 300px;
+    background-color: @lightBackgroundColor;
+    border-radius: 2px;
+    padding: 8px;
+    border: 1px solid @edgeColor;
+    font-weight: 100;
+    font-size: 14pt;
+    transition: border 0.4s ease-out;
+    outline: none;
+    color: @primaryColor;
+    margin-right: 8px;
+  }
+  
+  input:focus, .select:focus {
+    border-color: @primaryColor;
+  }
+  
+  button {
+    cursor: pointer;
+    display: inline-block;
+    transition: background-color 0.4s ease-out, color 0.4s ease-out;
+    width: 100px;
+    padding: 7px;
+    margin: 0 6px;
+    font-size: 13pt;
+    font-weight: 100;
+    font-family: 'Open Sans';
+    background-color: @primaryColor;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 3px;
+    border: 1px solid @primaryColor;
+    outline: none;
+  }
+  
+  button:hover {
+    color: #212121;
+    background-color: @lightElementColor;
+  }
+  
