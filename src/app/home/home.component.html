@@ -17,6 +17,7 @@
         <div class="agent-tag">first tag</div>
         <div class="agent-tag">second tag</div>
       </div>
+      <a href="/agent/{{ agent.id }}" class="agent-view-btn">view</a>
     </div>
     <div class="agent-details">
       <div class="agent-info" *ngIf="agent.type === 'generic'">
@@ -42,41 +43,6 @@
         <div class="agent-metric-summary">{{ getMetricSummaryFor(agent.metrics[metricType]) }}</div>
         <div (click)="isStarredMetric(agent.metrics[metricType]) ? unstarMetric(agent.id, agent.metrics[metricType], $event) : starMetric(agent.id, agent.metrics[metricType], $event);" class="fa-star" [ngClass]="{'far': !isStarredMetric(agent.metrics[metricType]), 'fa': isStarredMetric(agent.metrics[metricType]) }"></div>
       </div>
-      <!--<div class="agent-metric">
-        <div class="agent-metric-name">Disk I/O</div>
-        <div class="agent-metric-summary">up 10.4mb/s down 5.4mb/s</div>
-        <div class="far fa-star"></div>
-      </div>
-      <div class="agent-metric">
-        <div class="agent-metric-name">Disk usage</div>
-        <div class="agent-metric-summary">147GB/320GB</div>
-        <div class="far fa-star"></div>
-      </div>
-      <div class="agent-metric">
-        <div class="agent-metric-name">Memory</div>
-        <div class="agent-metric-summary">1.2GB/4GB</div>
-        <div class="far fa-star"></div>
-      </div>
-      <div class="agent-metric">
-        <div class="agent-metric-name">CPU</div>
-        <div class="agent-metric-summary">10%</div>
-        <div class="far fa-star"></div>
-      </div>
-      <div class="agent-metric">
-        <div class="agent-metric-name">Docker</div>
-        <div class="agent-metric-summary">10 containers running</div>
-        <div class="far fa-star"></div>
-      </div>
-      <div class="agent-metric">
-        <div class="agent-metric-name">NGINX</div>
-        <div class="agent-metric-summary">Throughput: 7.42 req/s, Errors: 0%</div>
-        <div class="far fa-star"></div>
-      </div>
-      <div class="agent-metric">
-        <div class="agent-metric-name">Uptime</div>
-        <div class="agent-metric-summary">2 weeks 4 days</div>
-        <div class="far fa-star"></div>
-    </div>-->
     </div>
   </div>
 </div>

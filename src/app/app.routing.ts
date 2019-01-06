@@ -1,5 +1,6 @@
 import { Routes, RouterModule } from '@angular/router';
 
+import { AgentComponent } from './agent';
 import { HomeComponent } from './home';
 import { AddAgentComponent } from './addAgent';
 import { ProjectsComponent } from './projects';
@@ -18,6 +19,7 @@ const appRoutes: Routes = [
     { path: 'add', component: AddAgentComponent, canActivate: [AuthGuard] },
     { path: 'projects', component: ProjectsComponent, canActivate: [AuthGuard] },
 
+    { path: 'agent/:agentID', component: AgentComponent, canActivate: [AuthGuard] },
     { path: 'agent/:agentID/metric/:metricID', component: MetricComponent, canActivate: [AuthGuard] },
 
     // otherwise redirect to home

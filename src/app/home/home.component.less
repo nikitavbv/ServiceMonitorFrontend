@@ -50,6 +50,14 @@ a {
         user-select: text;
     }
 
+    .agent-view-btn {
+      float: right;
+      padding-right: 32px;
+      opacity: 0;
+      transition: opacity 0.5s ease-out;
+      cursor: pointer;
+    }
+
     .agent-name, .agent-status {
       height: 50px;
       display: inline-block;
@@ -157,6 +165,10 @@ a {
     box-shadow: 9px 6px 12px rgba(0,0,0,.09);
 
     > .fa-star {
+      opacity: 1;
+    }
+
+    .agent-view-btn {
       opacity: 1;
     }
   }

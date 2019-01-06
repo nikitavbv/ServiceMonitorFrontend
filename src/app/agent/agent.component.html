@@ -1,0 +1,38 @@
+<div *ngIf="agent">
+    <h1>{{ agent.name }}</h1>
+    <div class="agent-status" [ngClass]="{'online': isOnline(agent), 'offline': !isOnline(agent)}">{{ getStatusText(agent) }}</div>
+    <div class="agent-info" *ngIf="agent.type === 'generic'">
+        IPv4: {{ json.parse(agent.properties.ipv4).join(', ') }}
+    </div>
+    <div class="agent-info" *ngIf="agent.type === 'generic'">
+        IPv6: {{ json.parse(agent.properties.ipv6).join(', ') }}
+    </div>
+    <div class="agent-info" *ngIf="agent.type === 'generic'">
+        OS: {{ agent.properties.os }}
+    </div>
+    <div class="agent-info" *ngIf="agent.type === 'endpoint'">
+        Endpoint: <a href="{{ agent.properties.endpoint }}">{{ agent.properties.endpoint }}</a>
+    </div>
+    <div class="agent-tags">
+        <div class="agent-tag">first tag</div>
+        <div class="agent-tag">second tag</div>
+        <div class="agent-tag">third tag</div>
+        <div class="agent-tag">tag with some long text...</div>
+    </div>
+    <h2 *ngIf="Object.keys(agent.metrics).length > 0">Metrics</h2>
+    <div class="metric-list">
+        <div *ngFor="let metricType of Object.keys(agent.metrics)" (click)="openMetricPage(agent.id, agent.metrics[metricType].id)" class="metric">
+            <div class="metric-name">{{ getMetricNameByType(metricType) }}</div>
+            <div class="metric-summary">{{ getMetricSummaryFor(agent.metrics[metricType]) }}</div>
+        </div>
+    </div>
+
+    <h2>Rename agent</h2>
+    <input [(ngModel)]="newAgentName" placeholder="New name..." />
+    <button (click)="renameAgent()">Rename</button>
+    <h2>Delete agent</h2>
+    <button (click)="deleteAgent()" class="delete-agent-btn">Delete</button>
+</div>
+<div *ngIf="agent === undefined">
+    <h1>Loading...</h1>
+</div>

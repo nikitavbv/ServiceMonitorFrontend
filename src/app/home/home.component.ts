@@ -11,6 +11,13 @@ import {
     ProjectService,
 } from '../_services';
 
+import {
+    getMetricNameByType,
+    getMetricSummaryFor,
+    isOnline,
+    getStatusText,
+} from '../_helpers';
+
 @Component({templateUrl: 'home.component.html', styleUrls: ['home.component.less']})
 export class HomeComponent implements OnInit {
 
@@ -18,21 +25,12 @@ export class HomeComponent implements OnInit {
     json = JSON;
     console = console;
 
-    ONLINE_INTERVAL = 2 * 60 * 1000;
-
-    metricTypes = {
-        'memory': 'Memory',
-        'diskUsage': 'Disk usage',
-        'uptime': 'Uptime',
-        'io': 'I/O',
-        'docker': 'Docker',
-        'cpu': 'CPU',
-        'network': 'Network',
-        'nginx': 'NGINX',
-        'mysql': 'MySQL'
-    };
-
     expandedAgentID = -1;
+
+    getMetricNameByType = getMetricNameByType;
+    getMetricSummaryFor = getMetricSummaryFor;
+    isOnline = isOnline;
+    getStatusText = getStatusText;
 
     constructor(
         private router: Router,
@@ -75,77 +73,6 @@ export class HomeComponent implements OnInit {
         this.projectService.unstarMetric(agentID, metric).subscribe((data) => {}, console.error);
     }
 
-    isOnline(agent: Agent) {
-        if (agent.type === 'endpoint') {
-            return this.isEndpointOnline(agent);
-        }
-
-        if (agent.metrics.length === 0) {
-            return false;
-        }
-
-        let newestMetric = Object.values(agent.metrics)
-            .reduce((m1, m2) => new Date(m1.timestamp).getTime() > new Date(m2.timestamp).getTime() ? m1 : m2);
-        return new Date().getTime() - new Date(newestMetric.timestamp).getTime() < this.ONLINE_INTERVAL;
-    }
-
-    getStatusText(agent: Agent) {
-        if (agent.type == 'endpoint') {
-            return this.getEndpointStatus(agent);
-        }
-
-        if (agent.metrics.length === 0) {
-            return 'no metrics';
-        }
-
-        if (this.isOnline(agent)) {
-            return 'online';
-        } else {
-            return 'offline';
-        }
-    }
-
-    isEndpointOnline(agent: Agent) {
-        return agent.properties.totalErrors == 0;
-    }
-
-    getEndpointStatus(agent: Agent) {
-        let uptime = (agent.properties.totalRequests - agent.properties.totalErrors) / agent.properties.totalRequests * 100;
-        let avgRespTime = agent.properties.totalTime / agent.properties.totalRequests;
-        return `uptime ${Math.round(uptime * 100) / 100}%, avg. resp. time: ${Math.round(avgRespTime*100) / 100}ms`;
-    }
-
-    /**
-     * Convert number bytes to text
-     * Use base-10 for:
-     *  - network bandwidth
-     *  - disk sizes
-     * Use base-2 for:
-     *  - ram
-     * 
-     * @param n 
-     * @param base
-     */
-    byteSizeToStr(n, base=1000) {
-        if (n <= base) {
-            return `${Math.round(n * 100) / 100} bytes`;
-        }
-        n /= base;
-        if (n <= base) {
-            return `${Math.round(n * 100) / 100} KB`;
-        }
-        n /= base;
-        if (n <= base) {
-            return `${Math.round(n * 100) / 100} MB`;
-        }
-        n /= base;
-        if (n <= base) {
-            return `${Math.round(n * 100) / 100} GB`;
-        }
-        n /= base;
-        return `${Math.round(n * 100) / 100} TB`;
-    }
-
     getMetricByID(metricID): Metric {
         for (let agent of this.userData.agents) {
             for (let metric of Object.values(agent.metrics)) {
@@ -164,146 +91,6 @@ export class HomeComponent implements OnInit {
                 }
             }
         }
-    }
-
-    getMetricNameByType(metricType) {
-        if (metricType in this.metricTypes) {
-            return this.metricTypes[metricType];
-        } else {
-            return metricType;
-        }
-    }
-
-    getMetricSummaryFor(metricData) {
-        let metricType = metricData.type;
-        if (metricType === 'memory') {
-            return this.getMemoryMetricSummary(metricData);
-        } else if (metricType === 'diskUsage') {
-            return this.getDiskUsageMetricSummary(metricData);
-        } else if (metricType === 'uptime') {
-            return this.getUptimeMetricSummary(metricData);
-        } else if (metricType === 'io') {
-            return this.getIOMetricSummary(metricData);
-        } else if (metricType === 'docker') {
-            return this.getDockerMetricSummary(metricData);
-        } else if (metricType === 'cpu') {
-            return this.getCPUMetricSummary(metricData);
-        } else if (metricType === 'network') {
-            return this.getNetworkMetricSummary(metricData);
-        } else if (metricType === 'nginx') {
-            return this.getNginxMetricSummary(metricData);
-        } else if (metricType === 'mysql') {
-            return this.getMysqlMetricSummary(metricData);
-        } else {
-            return JSON.stringify(metricData);
-        }
-    }
-
-    getMemoryMetricSummary(metricData) {
-        return this.byteSizeToStr((metricData.total - metricData.free)*1024, 1024) + 
-            '/' + this.byteSizeToStr(metricData.total*1024, 1024);
-    }
-
-    getDiskUsageMetricSummary(metricData) {
-        let total = 0;
-        let used = 0;
-        metricData.filesystems.forEach(fs => {
-            total += fs.total;
-            used += fs.used;
-        });
-        return this.byteSizeToStr(used*1024, 1000) + '/' + this.byteSizeToStr(total*1024, 1000);
-    }
-
-    getUptimeMetricSummary(metricData) {
-        let seconds = metricData.uptime;
-        if (seconds <= 60) {
-            return `${Math.round(seconds * 100) / 100} s.`;
-        }
-
-        let minutes = seconds / 60;
-        if (minutes <= 60) {
-            return `${Math.round(minutes * 100) / 100} min.`;
-        }
-
-        let hours = minutes / 60;
-        if (hours <= 24) {
-            return `${Math.round(hours)} hours`;
-        }
-
-        let days = hours / 24;
-        return `${Math.round(days * 100) / 100} days`;
-    }
-
-    getIOMetricSummary(metricData) {
-        let devices = metricData.devices;
-        let deviceNames = devices.map(d => d.device);
-        devices = devices.filter(d => {
-            let deviceName = d.device;
-            for (let name of deviceNames) {
-                if (deviceName.length > name.length && deviceName.startsWith(name)) {
-                    return false;
-                }
-            }
-            return true;
-        });
-
-        let read = 0;
-        let write = 0;
-        devices.forEach(d => {
-            read += d.read;
-            write += d.write;
-        });
-
-        return `Read: ${this.byteSizeToStr(read)}/s, Write: ${this.byteSizeToStr(write)}/s`;
-    }
-
-    getDockerMetricSummary(metricData) {
-        let totalContainers = metricData.containers.length;
-        let upContainers = metricData.containers.filter(c => c.status.startsWith('Up ')).length;
-        return `${upContainers}/${totalContainers} containers up`;
-    }
-
-    getCPUMetricSummary(metricData) {
-        let cpus = metricData.cpus;
-        let cpuNames = cpus.map(c => c.cpu);
-        cpus = cpus.filter(c => {
-            let cpuName = c.cpu;
-            for (let name of cpuNames) {
-                if (cpuName.length > name.length && cpuName.startsWith(name)) {
-                    return false;
-                }
-            }
-            return true;
-        });
-
-        let totalUser = 0;
-        let total = 0;
-        cpus.forEach(cpu => {
-            totalUser += cpu.user;
-            total += 1000;
-        });
-
-        return `${Math.round((totalUser/total)*100*100)/100}% load`;
-    }
-
-    getNetworkMetricSummary(metricData) {
-        let totalSent = 0;
-        let totalReceived = 0;
-
-        metricData.devices.forEach(device => {
-            totalSent += device.bytesSent;
-            totalReceived += device.bytesReceived;
-        });
-
-        return `Egress: ${this.byteSizeToStr(totalSent)}/s, Ingress: ${this.byteSizeToStr(totalReceived)}/s`;
-    }
-
-    getNginxMetricSummary(metricData) {
-        return Math.round(metricData.requests * 100) / 100 + ' req/s';
-    }
-
-    getMysqlMetricSummary(metricData) {
-        return (Math.round(metricData.Questions * 100) / 100) + ' queries/s';
     }
 
 }

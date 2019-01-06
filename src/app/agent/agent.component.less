@@ -1,0 +1,219 @@
+@import "../variables.less";
+@firstColumnWidth: 300px;
+@firstColumnPadding: 27px;
+@secondColumnWidth: 300px;
+@starWidth: 40px;
+
+h1, h2 {
+  font-family: 'Open Sans';
+  color: @headerColor;
+  padding: 10px 0;
+  margin: 0;
+  width: 100%;
+  font-weight: 500;
+  font-size: 18pt;
+  user-select: none;
+}
+
+a {
+  color: @primaryColor;
+  text-decoration: none;
+}
+
+input {
+  display: inline-block;
+  width: 300px;
+  background-color: @lightBackgroundColor;
+  border-radius: 2px;
+  padding: 8px;
+  border: 1px solid @edgeColor;
+  font-weight: 100;
+  font-size: 14pt;
+  transition: border 0.4s ease-out;
+  outline: none;
+  color: @primaryColor;
+}
+
+input:focus {
+  border-color: @primaryColor;
+}
+
+button {
+  cursor: pointer;
+  display: inline-block;
+  transition: background-color 0.4s ease-out, color 0.4s ease-out;
+  width: 100px;
+  padding: 7px;
+  margin: 0 6px;
+  font-size: 13pt;
+  font-weight: 100;
+  font-family: 'Open Sans';
+  background-color: @primaryColor;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 3px;
+  border: 1px solid @primaryColor;
+  outline: none;
+}
+
+button:hover {
+  color: #212121;
+  background-color: @lightElementColor;
+}
+
+.agent-name {
+  padding-left: 27px;
+  width: @firstColumnWidth;
+}
+
+.agent-status {
+  width: @secondColumnWidth;
+  padding-bottom: 8px;
+}
+
+.agent-info {
+  user-select: text;
+  line-height: 2;
+}
+
+.agent-view-btn {
+  float: right;
+  padding-right: 32px;
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
+  cursor: pointer;
+}
+
+.agent-name,
+.agent-status {
+  display: inline-block;
+  vertical-align: middle;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+>.fa-star {
+  opacity: 0;
+  transition: opacity 0.4s ease-out;
+  cursor: pointer;
+  width: @starWidth;
+}
+
+.agent-status.online {
+  color: @statusOKColor;
+}
+
+.agent-status.offline {
+  color: @statusBadColor;
+}
+
+.agent-details {
+  display: block;
+  padding: 0 @firstColumnPadding;
+  background-color: lighten(@tableEdgeColor, 10%);
+  font-size: 14px;
+  max-height: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.4s ease-out;
+  .agent-metric {
+    display: block;
+    color: @primaryColor;
+    cursor: pointer;
+  }
+  .agent-metric-name {
+    width: calc(@firstColumnWidth - @firstColumnPadding);
+  }
+  .agent-metric-summary {
+    width: @secondColumnWidth;
+  }
+  .agent-metric-name,
+  .agent-metric-summary {
+    display: inline-block;
+    vertical-align: middle;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .fa-star {
+    opacity: 0;
+    transition: all 0.4s ease-out;
+    cursor: pointer;
+  }
+  .agent-metric:hover {
+    .fa-star {
+      opacity: 1;
+    }
+  }
+}
+
+.agent-tags {
+  display: inline-block;
+  padding-top: 8px;
+  .agent-tag {
+    display: inline;
+    background-color: @tagColor;
+    border-color: @tagColor;
+    color: @lowPriorityTextColor;
+    border-radius: 3px;
+    padding: 4px 8px;
+    margin-right: 6px;
+    cursor: pointer;
+  }
+}
+
+.metric-list {
+  box-sizing: border-box;
+  width: 100%;
+  color: @primaryColor;
+  user-select: none;
+  cursor: pointer;
+  .metric {
+    border: 1px solid @tableEdgeColor;
+    box-shadow: 1px 2px 4px rgba(0, 0, 0, .03);
+    font-size: 16px;
+    line-height: 50px;
+    border-bottom: 0;
+    font-weight: 500;
+    transition: box-shadow 0.4s ease-out;
+    .metric-name {
+      display: inline-block;
+      padding-left: 27px;
+      width: @firstColumnWidth;
+      vertical-align: middle;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      .metric-agent {
+        color: @lowPriorityTextColor;
+      }
+    }
+    .metric-summary {
+      padding-left: 4px;
+      width: @secondColumnWidth;
+      display: inline-block;
+    }
+  }
+  .metric:first-of-type {
+    border-radius: 3px 3px 0;
+  }
+  .metric:last-of-type {
+    border-radius: 0 0 3px 3px;
+    border-bottom: 1px solid @tableEdgeColor;
+  }
+  .metric:hover {
+    box-shadow: 9px 6px 12px rgba(0, 0, 0, .09);
+  }
+}
+
+.delete-agent-btn {
+  background-color: @dangerColor;
+  border-color: @dangerColor;
+}
+
+.delete-agent-btn:hover {
+  background-color: white;
+  color: @dangerColor;
+}

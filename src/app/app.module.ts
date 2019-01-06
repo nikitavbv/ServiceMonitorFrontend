@@ -19,6 +19,7 @@ import {
 
 import { HeaderComponent } from './_shared';
 
+import { AgentComponent } from './agent';
 import { HomeComponent } from './home';
 import { AddAgentComponent } from './addAgent';
 import { ProjectsComponent } from './projects';
@@ -32,6 +33,7 @@ if (environment.production) {
 
 @NgModule({
   declarations: [
+    AgentComponent,
     AppComponent,
     HeaderComponent,
 
