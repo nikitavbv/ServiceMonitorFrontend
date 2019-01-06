@@ -16,14 +16,7 @@ export class UserDataService {
         return this.http.get<InitResponse>('/api/v1/init').pipe(map((res:InitResponse) => {
           this.projects = res.projects;
           this.agents = res.agents;
-          this.makeMetricsList();
         }));
-    }
-
-    makeMetricsList () {
-      this.agents.forEach(agent => {
-        // TODO: implement this
-      });
     }
 
 }
