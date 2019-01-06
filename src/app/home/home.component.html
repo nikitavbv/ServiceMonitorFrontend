@@ -14,8 +14,9 @@
       <div class="agent-name">{{ agent.name }}</div>
       <div class="agent-status" [ngClass]="{'online': isOnline(agent), 'offline': !isOnline(agent)}">{{ getStatusText(agent) }}</div>
       <div class="agent-tags">
-        <div class="agent-tag">first tag</div>
-        <div class="agent-tag">second tag</div>
+        <div *ngFor="let tag of agent.tags.slice(0, 3)" class="agent-tag">
+          {{ tag }}
+        </div>
       </div>
       <a href="/agent/{{ agent.id }}" class="agent-view-btn">view</a>
     </div>
@@ -33,10 +34,9 @@
         Endpoint: <a href="{{ agent.properties.endpoint }}">{{ agent.properties.endpoint }}</a>
       </div>
       <div class="agent-tags">
-        <div class="agent-tag">first tag</div>
-        <div class="agent-tag">second tag</div>
-        <div class="agent-tag">third tag</div>
-        <div class="agent-tag">tag with some long text...</div>
+        <div *ngFor="let tag of agent.tags" class="agent-tag">
+          {{ tag }}
+        </div>
       </div>
       <div *ngFor="let metricType of Object.keys(agent.metrics)" (click)="openMetricPage(agent.id, agent.metrics[metricType].id)" class="agent-metric">
         <div class="agent-metric-name">{{ getMetricNameByType(metricType) }}</div>

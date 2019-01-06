@@ -14,11 +14,13 @@
         Endpoint: <a href="{{ agent.properties.endpoint }}">{{ agent.properties.endpoint }}</a>
     </div>
     <div class="agent-tags">
-        <div class="agent-tag">first tag</div>
-        <div class="agent-tag">second tag</div>
-        <div class="agent-tag">third tag</div>
-        <div class="agent-tag">tag with some long text...</div>
+        <div *ngFor="let tag of agent.tags" class="agent-tag">
+            {{ tag }}
+            <i (click)="removeTag(tag)" class="fa fa-times"></i>
+        </div>
     </div>
+    <input [(ngModel)]="newTagName" placeholder="Add tag..." />
+    <button (click)="addTag()">Add tag</button>
     <h2 *ngIf="Object.keys(agent.metrics).length > 0">Metrics</h2>
     <div class="metric-list">
         <div *ngFor="let metricType of Object.keys(agent.metrics)" (click)="openMetricPage(agent.id, agent.metrics[metricType].id)" class="metric">

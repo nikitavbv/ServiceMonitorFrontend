@@ -24,4 +24,12 @@ export class AgentService {
     return this.http.delete<any>(`/api/v1/agent/${id}`);
   }
 
+  addAgentTag(id: string, tag: string) {
+    return this.http.put<any>(`/api/v1/agent/${id}`, { 'tags.add': tag });
+  }
+
+  removeAgentTag(id: string, tag: string) {
+    return this.http.put<any>(`/api/v1/agent/${id}`, { 'tags.remove': tag });
+  }
+
 }

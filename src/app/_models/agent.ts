@@ -7,5 +7,6 @@ export class Agent {
   type: string;
   properties: any;
   metrics: Metric[];
+  tags: string[];
 
 }

@@ -20,6 +20,7 @@ export class AgentComponent implements OnInit {
     private agentID: string;
     private agent: Agent;
     private newAgentName: string;
+    private newTagName: string;
 
     getMetricNameByType = getMetricNameByType;
     getMetricSummaryFor = getMetricSummaryFor;
@@ -58,6 +59,20 @@ export class AgentComponent implements OnInit {
             .subscribe(data => {
                 this.router.navigate(['/'])
             }, console.error);
+    }
+
+    addTag() {
+        this.agentService.addAgentTag(this.agentID.toString(), this.newTagName)
+            .subscribe(data => {
+                this.agent.tags.push(this.newTagName);
+            }, console.error);
+    }
+
+    removeTag(tagToRemove: string) {
+        this.agentService.removeAgentTag(this.agentID.toString(), tagToRemove)
+            .subscribe(data => {
+                this.agent.tags.splice(this.agent.tags.indexOf(tagToRemove), 1);
+            })
     }
 
 }
