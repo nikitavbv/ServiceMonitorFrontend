@@ -16,6 +16,9 @@ export class HomeComponent implements OnInit {
 
     Object = Object;
     json = JSON;
+    console = console;
+
+    ONLINE_INTERVAL = 2 * 60 * 1000;
 
     metricTypes = {
         'memory': 'Memory',
@@ -25,6 +28,8 @@ export class HomeComponent implements OnInit {
         'docker': 'Docker',
         'cpu': 'CPU',
         'network': 'Network',
+        'nginx': 'NGINX',
+        'mysql': 'MySQL'
     };
 
     expandedAgentID = -1;
@@ -46,7 +51,6 @@ export class HomeComponent implements OnInit {
     }
 
     openMetricPage(agentID: number, metricID: number, event) {
-        console.log('metric page', agentID, metricID);
         this.router.navigate([`agent/${agentID}/metric/${metricID}`]);
     }
 
@@ -69,6 +73,12 @@ export class HomeComponent implements OnInit {
     unstarMetric(agentID: number, metric: Metric, event) {
         event.stopPropagation();
         this.projectService.unstarMetric(agentID, metric).subscribe((data) => {}, console.error);
+    }
+
+    isOnline(agent: Agent) {
+        let newestMetric = Object.values(agent.metrics)
+            .reduce((m1, m2) => new Date(m1.timestamp).getTime() > new Date(m2.timestamp).getTime() ? m1 : m2);
+        return new Date().getTime() - new Date(newestMetric.timestamp).getTime() < this.ONLINE_INTERVAL;
     }
 
     /**
@@ -146,6 +156,10 @@ export class HomeComponent implements OnInit {
             return this.getCPUMetricSummary(metricData);
         } else if (metricType === 'network') {
             return this.getNetworkMetricSummary(metricData);
+        } else if (metricType === 'nginx') {
+            return this.getNginxMetricSummary(metricData);
+        } else if (metricType === 'mysql') {
+            return this.getMysqlMetricSummary(metricData);
         } else {
             return JSON.stringify(metricData);
         }
@@ -248,6 +262,14 @@ export class HomeComponent implements OnInit {
         });
 
         return `Egress: ${this.byteSizeToStr(totalSent)}/s, Ingress: ${this.byteSizeToStr(totalReceived)}/s`;
+    }
+
+    getNginxMetricSummary(metricData) {
+        return Math.round(metricData.requests * 100) / 100 + ' req/s';
+    }
+
+    getMysqlMetricSummary(metricData) {
+        return metricData.Questions + ' queries/s';
     }
 
 }

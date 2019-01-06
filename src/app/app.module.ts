@@ -11,6 +11,7 @@ import { JwtInterceptor } from './_helpers';
 import {
   AgentService,
   AuthenticationService,
+  MetricService,
   PageTitleService,
   ProjectService,
   UserDataService,
@@ -54,6 +55,7 @@ if (environment.production) {
     AgentService,
     AuthenticationService,
     UserDataService,
+    MetricService,
     PageTitleService,
     ProjectService,
     {

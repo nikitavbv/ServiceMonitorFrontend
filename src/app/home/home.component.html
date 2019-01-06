@@ -12,7 +12,7 @@
   <div *ngFor="let agent of userData.agents" class="agent" [ngClass]="{'expanded': expandedAgentID === agent.id}">
     <div class="agent-bar" (click)="showAgentExpanded(agent)">
       <div class="agent-name">{{ agent.name }}</div>
-      <div class="agent-status" data-status="online">online</div>
+      <div class="agent-status" [ngClass]="{'online': isOnline(agent), 'offline': !isOnline(agent)}">{{ isOnline(agent) ? 'online' : 'offline' }}</div>
       <div class="agent-tags">
         <div class="agent-tag">first tag</div>
         <div class="agent-tag">second tag</div>
