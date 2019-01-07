@@ -15,6 +15,7 @@ import {
   PageTitleService,
   ProjectService,
   UserDataService,
+  SearchService,
 } from './_services';
 
 import { HeaderComponent } from './_shared';
@@ -60,6 +61,7 @@ if (environment.production) {
     MetricService,
     PageTitleService,
     ProjectService,
+    SearchService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,

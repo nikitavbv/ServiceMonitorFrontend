@@ -1,6 +1,6 @@
 <header *ngIf="auth.isLoggedIn()">
   <i *ngIf="router.url === '/'" class="fas fa-search"></i>
-  <input *ngIf="router.url === '/'" class="searchInput" placeholder="Search by agent name or tags..." />
+  <input *ngIf="router.url === '/'" [(ngModel)]="searchService.searchQuery" class="searchInput" placeholder="Search by agent name, type, properties, tags..." />
   <div class="nav-side">
     <a href="/">Dashboard</a>
     <a href="/add">Add agent</a>

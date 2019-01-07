@@ -1,4 +1,4 @@
-<div *ngFor="let project of userData.projects" class="metric-list">
+<div *ngFor="let project of (queryString.replace(' ', '') === '' ? userData.projects : [])" class="metric-list">
   <h1 *ngIf="project.starredMetrics.length > 0">{{ project.name }}</h1>
   <div *ngFor="let metricID of project.starredMetrics" class="metric" (click)="openMetricPage(getAgentByMetricID(metricID).id, metricID)">
     <div class="metric-name">{{ getMetricNameByType(getMetricByID(metricID).type) }}<span class="metric-agent">@Ubuntu 18.04.1 LTS</span></div>
@@ -9,7 +9,7 @@
 
 <h1>All agents</h1>
 <div class="agent-list">
-  <div *ngFor="let agent of userData.agents" class="agent" [ngClass]="{'expanded': expandedAgentID === agent.id}">
+  <div *ngFor="let agent of filteredAgents || queryString" class="agent" [ngClass]="{'expanded': expandedAgentID === agent.id}">
     <div class="agent-bar" (click)="showAgentExpanded(agent)">
       <div class="agent-name">{{ agent.name }}</div>
       <div class="agent-status" [ngClass]="{'online': isOnline(agent), 'offline': !isOnline(agent)}">{{ getStatusText(agent) }}</div>

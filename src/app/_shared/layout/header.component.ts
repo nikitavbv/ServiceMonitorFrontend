@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService, PageTitleService } from '../../_services';
+import { AuthenticationService, PageTitleService, SearchService } from '../../_services';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,6 +9,11 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent {
 
-    constructor(public auth: AuthenticationService, private title: PageTitleService, private router: Router) {}
+    constructor(
+        public auth: AuthenticationService, 
+        private title: PageTitleService, 
+        private router: Router,
+        private searchService: SearchService
+    ) {}
 
 }
