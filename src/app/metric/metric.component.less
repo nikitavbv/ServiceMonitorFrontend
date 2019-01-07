@@ -1,12 +1,87 @@
 @import "../variables.less";
 
-h1 {
-    font-family: 'Open Sans';
-    color: @headerColor;
-    padding: 10px 0;
-    margin: 0;
-    width: 100%;
+@firstColumnWidth: 300px;
+@firstColumnPadding: 27px;
+@secondColumnWidth: 300px;
+@starWidth: 40px;
+
+h1, h2 {
+  font-family: 'Open Sans';
+  color: @headerColor;
+  padding: 10px 0;
+  margin: 0;
+  width: 100%;
+  font-weight: 500;
+  font-size: 18pt;
+  user-select: none;
+}
+
+input,
+select {
+    display: inline-block;
+    width: 300px;
+    background-color: @lightBackgroundColor;
+    border-radius: 2px;
+    padding: 8px;
+    border: 1px solid @edgeColor;
+    font-weight: 100;
+    font-size: 14pt;
+    transition: border 0.4s ease-out;
+    outline: none;
+    color: @primaryColor;
+    margin-right: 8px;
+}
+
+input:focus,
+.select:focus {
+    border-color: @primaryColor;
+}
+
+.agent-name, .state-timestamp {
+  color: @lowPriorityTextColor;
+}
+
+.metric-state {
+  box-sizing: border-box;
+  width: 100%;
+  color: @primaryColor;
+
+  .metric-state-param {
+    border: 1px solid @tableEdgeColor;
+    box-shadow: 1px 2px 4px rgba(0,0,0,.03);
+    font-size: 16px;
+    line-height: 50px;
+    border-bottom: 0;
     font-weight: 500;
-    font-size: 18pt;
-    user-select: none;
+    transition: box-shadow 0.4s ease-out;
+
+    .metric-state-name {
+      display: inline-block;
+      padding-left: 27px;
+      width: @firstColumnWidth;
+      vertical-align: middle;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .metric-state-value {
+      padding-left: 4px;
+      width: @secondColumnWidth;
+      display: inline-block;
+    }
   }
+
+  .metric-state-param:first-of-type {
+    border-radius: 3px 3px 0;
+  }
+
+  .metric-state-param:last-of-type {
+    border-radius: 0 0 3px 3px;
+    border-bottom: 1px solid @tableEdgeColor;
+  }
+
+  .metric-state-param:hover {
+    box-shadow: 9px 6px 12px rgba(0,0,0,.09);
+  }
+}

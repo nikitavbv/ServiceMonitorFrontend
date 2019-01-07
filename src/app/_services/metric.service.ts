@@ -1,10 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
-import {
-    Metric,
-} from '../_models';
-
 @Injectable()
 export class MetricService {
 
@@ -15,7 +11,7 @@ export class MetricService {
             .set('from', from.toString())
             .set('to', to.toString())
             .set('points', points.toString());
-        return this.http.get<Metric>(`/api/v1/metric/${id}`, { params: params });
+        return this.http.get<any>(`/api/v1/metric/${id}`, { params: params });
     }
 
 }
