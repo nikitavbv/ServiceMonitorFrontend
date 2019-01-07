@@ -10,7 +10,7 @@ import {
 
 declare let Highcharts: any;
 
-@Component({templateUrl: 'metric.component.html', styleUrls: ['metric.component.less']})
+@Component({ templateUrl: 'metric.component.html', styleUrls: ['metric.component.less'] })
 export class MetricComponent implements OnInit {
 
     private agentID: string;
@@ -29,13 +29,13 @@ export class MetricComponent implements OnInit {
 
     Object = Object;
     getMetricNameByType = getMetricNameByType;
-    
+
     constructor(
-        private pageTitle: PageTitleService, 
-        private route: ActivatedRoute, 
+        private pageTitle: PageTitleService,
+        private route: ActivatedRoute,
         private agentService: AgentService,
         private metricService: MetricService
-    ){}
+    ) { }
 
     ngOnInit() {
         this.pageTitle.setPageTitle('Metric');
@@ -44,14 +44,14 @@ export class MetricComponent implements OnInit {
             this.metricID = params.metricID;
 
             this.metricService.getMetric(
-                parseInt(this.metricID), 
-                this.getYesterday().getTime(), 
-                new Date().getTime(), 
+                parseInt(this.metricID),
+                this.getYesterday().getTime(),
+                new Date().getTime(),
                 this.MAX_CHART_POINTS
             ).subscribe(data => {
                 this.metric = data.metric;
-                this.currentState = Object.assign({}, data.history[data.history.length-1]);
-                this.currentStateTimestamp = this.formatDate(new Date(this.currentState['timestamp']));
+                this.currentState = this.createCurrentState(this.metric.type, data.history[data.history.length - 1]);
+                this.currentStateTimestamp = this.formatDate(new Date(data.history[data.history.length - 1]['timestamp']));
                 delete this.currentState['id'];
                 delete this.currentState['timestamp'];
                 delete this.currentState['type'];
@@ -73,6 +73,67 @@ export class MetricComponent implements OnInit {
         this.initDone = true;
     }
 
+    getMetricValueDescription(metricType, key, value) {
+        if (metricType === 'diskUsage') {
+            return value.used + '/' + value.total;
+        } else if (metricType === 'memory') {
+            return value;
+        } else if (metricType === 'docker') {
+            return value;
+        } else if (metricType === 'io') {
+            return value.read + '/' + value.write;
+        } else if (metricType === 'cpu') {
+            return 'nice: ' + value['nice']
+                + ',\nuser: ' + value['user']
+                + ',\nsystem: ' + value['system']
+                + ',\nidle: ' + value['idle']
+                + ',\niowait: ' + value['iowait']
+                + ',\nirq: ' + value['irq']
+                + ',\nsofirq: ' + value['sofirq']
+                + ',\nguest: ' + value['guest']
+                + ',\nsteal: ' + value['steal']
+                + '\nguestNice: ' + value['guestNice'];
+        } else if (metricType === 'network') {
+            return value.bytesSent + '/' + value.bytesReceived;
+        }
+        return JSON.stringify(value);
+    }
+
+    createCurrentState(metricType, data) {
+        if (metricType === 'diskUsage') {
+            let obj = {};
+            data.filesystems.forEach(fs => {
+                obj[fs.filesystem] = fs;
+            });
+            return obj;
+        } else if (metricType === 'docker') {
+            let obj = {};
+            data.containers.forEach(container => {
+                obj[container.containerName] = container.status;
+            });
+            return obj;
+        } else if (metricType === 'io') {
+            let obj = {};
+            data.devices.forEach(io => {
+                obj[io.device] = io;
+            });
+            return obj;
+        } else if (metricType === 'cpu') {
+            let obj = {};
+            data.cpus.forEach(cpu => {
+                obj[cpu.cpu] = cpu;
+            });
+            return obj;
+        } else if (metricType === 'network') {
+            let obj = {};
+            data.devices.forEach(device => {
+                obj[device.device] = device;
+            });
+            return obj;
+        }
+        return Object.assign({}, data);
+    }
+
     get selectedDataset(): string {
         return this._selectedDataset;
     }
@@ -86,7 +147,7 @@ export class MetricComponent implements OnInit {
                 series: [{
                     type: 'area',
                     name: n,
-                    data: this.chartData[n]
+                    data: Object.assign([], this.chartData[n])
                 }]
             });
         }
@@ -100,16 +161,24 @@ export class MetricComponent implements OnInit {
     }
 
     formatDate(d: Date): String {
-        return ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2) + " " + ("0" + d.getDate()).slice(-2) + "-" + ("0"+(d.getMonth()+1)).slice(-2) + "-" +
+        return ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2) + " " + ("0" + d.getDate()).slice(-2) + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" +
             d.getFullYear();
     }
 
     createChartData() {
-        if (this.metric.type === 'memory') {
+        if (this.metric.type === 'memory' || this.metric.type === 'nginx' || this.metric.type === 'mysql') {
             this.createMemoryChartData();
+        } else if (this.metric.type === 'diskUsage') {
+            this.createDiskUsageChartData();
+        } else if (this.metric.type === 'io') {
+            this.createIOChartData();
+        } else if (this.metric.type === 'cpu') {
+            this.createCPUChartData();
+        } else if (this.metric.type === 'network') {
+            this.createNetworkChartData();
         }
 
-        this.selectedDataset = this.fields[0];
+        this.selectedDataset = Object.keys(this.chartData)[0];
     }
 
     createMemoryChartData() {
@@ -118,9 +187,78 @@ export class MetricComponent implements OnInit {
             let time = new Date(record.timestamp).getTime();
             for (let field of this.fields) {
                 this.chartData[field] = (this.chartData[field] || []);
+                if  (record[field] > 0) {
+                    this.chartData[field].push([
+                        time,
+                        record[field],
+                    ]);
+                }
+            }
+        }
+    }
+
+    createDiskUsageChartData() {
+        this.fields = this.history[0].filesystems.map(n => n.filesystem);
+        for (let record of this.history) {
+            let time = new Date(record.timestamp).getTime();
+            for (let field of this.fields) {
+                this.chartData[field] = (this.chartData[field] || []);
                 this.chartData[field].push([
                     time,
-                    record[field],
+                    record.filesystems.filter(f => f.filesystem === field)[0].used,
+                ]);
+            }
+        }
+    }
+
+    createIOChartData() {
+        this.fields = this.history[this.history.length - 1].devices.map(n => n.device);
+        for (let record of this.history) {
+            let time = new Date(record.timestamp).getTime();
+            for (let field of this.fields) {
+                this.chartData[field + ':read'] = (this.chartData[field + ':read'] || []);
+                this.chartData[field + ':write'] = (this.chartData[field + ':write'] || []);
+                this.chartData[field + ':read'].push([
+                    time,
+                    (record.devices.filter(f => f.device === field)[0] || { 'read': 0 }).read,
+                ]);
+                this.chartData[field + ':write'].push([
+                    time,
+                    (record.devices.filter(f => f.device === field)[0] || { 'write': 0 }).write,
+                ]);
+            }
+        }
+    }
+
+    createCPUChartData() {
+        this.fields = this.history[this.history.length - 1].cpus.map(n => n.cpu);
+        for (let record of this.history) {
+            let time = new Date(record.timestamp).getTime();
+            for (let field of this.fields) {
+                this.chartData[field] = (this.chartData[field] || []);
+                let device = record.cpus.filter(f => f.cpu === field)[0] || { 'user': 0, 'system': 0 };
+                this.chartData[field].push([
+                    time,
+                    (device.user + device.system) / 1000 * 100
+                ]);
+            }
+        }
+    }
+
+    createNetworkChartData() {
+        this.fields = this.history[this.history.length - 1].devices.map(n => n.device);
+        for (let record of this.history) {
+            let time = new Date(record.timestamp).getTime();
+            for (let field of this.fields) {
+                this.chartData[field + ':sent'] = (this.chartData[field + ':sent'] || []);
+                this.chartData[field + ':received'] = (this.chartData[field + ':received'] || []);
+                this.chartData[field + ':sent'].push([
+                    time,
+                    (record.devices.filter(f => f.device === field)[0] || { 'bytesSent': 0 }).bytesSent,
+                ]);
+                this.chartData[field + ':received'].push([
+                    time,
+                    (record.devices.filter(f => f.device === field)[0] || { 'bytesReceived': 0 }).bytesReceived,
                 ]);
             }
         }
@@ -174,7 +312,7 @@ export class MetricComponent implements OnInit {
             series: [{
                 type: 'area',
                 name: this.selectedDataset,
-                data: this.chartData[this.selectedDataset]
+                data: Object.assign([], this.chartData[this.selectedDataset])
             }]
         });
     }

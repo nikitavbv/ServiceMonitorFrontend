@@ -4,14 +4,14 @@
     <div class="metric-state">
         <div *ngFor="let key of Object.keys(currentState)" class="metric-state-param">
             <div class="metric-state-name">{{ key }}</div>
-            <div class="metric-state-value">{{ currentState[key] }}</div>
+            <div class="metric-state-value">{{ getMetricValueDescription(metric.type, key, currentState[key]) }}</div>
         </div>
     </div>
-    <h2>Chart</h2>
-    <select [(ngModel)]="selectedDataset">
-        <option *ngFor="let field of fields" [value]="field">{{ field }}</option>
+    <h2 *ngIf="metric.type !== 'uptime' && metric.type !== 'docker'">Chart</h2>
+    <select [(ngModel)]="selectedDataset" *ngIf="metric.type !== 'uptime' && metric.type !== 'docker'">
+        <option *ngFor="let field of Object.keys(this.chartData)" [value]="field">{{ field }}</option>
     </select>
-    <div id="metricChart"></div>
+    <div id="metricChart" *ngIf="metric.type !== 'uptime' && metric.type !== 'docker'"></div>
 </div>
 <div *ngIf="metric === undefined">
     <h1>Loading...</h1>
