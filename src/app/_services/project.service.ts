@@ -45,6 +45,10 @@ export class ProjectService {
     }));
   }
 
+  addUserToProject(project: Project, username: String) {
+    return this.http.put<any>(`/api/v1/project/${project.id}`, { 'user.add': username });
+  }
+
   starMetric(projectID: number, metric: Metric) {
     return this.http.put<any>(`/api/v1/project/${projectID}/starMetric`, { metricID: metric.id }).pipe(map((res:any) => {
       this.userDataService.projects.forEach((project) => {

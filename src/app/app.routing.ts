@@ -8,6 +8,7 @@ import { SetupComponent } from './setup';
 import { LoginComponent } from './login';
 import { MetricComponent } from './metric';
 import { AuthGuard } from './_guards';
+import { SettingsComponent } from './settings';
 
 const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -18,6 +19,7 @@ const appRoutes: Routes = [
 
     { path: 'add', component: AddAgentComponent, canActivate: [AuthGuard] },
     { path: 'projects', component: ProjectsComponent, canActivate: [AuthGuard] },
+    { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] },
 
     { path: 'agent/:agentID', component: AgentComponent, canActivate: [AuthGuard] },
     { path: 'agent/:agentID/metric/:metricID', component: MetricComponent, canActivate: [AuthGuard] },

@@ -24,6 +24,7 @@ import { AgentComponent } from './agent';
 import { HomeComponent } from './home';
 import { AddAgentComponent } from './addAgent';
 import { ProjectsComponent } from './projects';
+import { SettingsComponent } from './settings';
 import { SetupComponent } from './setup';
 import { LoginComponent } from './login';
 import { MetricComponent } from './metric';
@@ -41,6 +42,7 @@ if (environment.production) {
     HomeComponent,
     AddAgentComponent,
     ProjectsComponent,
+    SettingsComponent,
     SetupComponent,
     LoginComponent,
     MetricComponent,

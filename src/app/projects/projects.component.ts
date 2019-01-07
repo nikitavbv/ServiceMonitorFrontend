@@ -17,6 +17,7 @@ export class ProjectsComponent implements OnInit {
   newProjectName: string = '';
   expandedProjectID: number = -1;
   updatedProjectNames: any = {};
+  addUserToProjectNames: any = {};
 
   defaultSubscribe = [data => {}, console.error];
 
@@ -55,6 +56,13 @@ export class ProjectsComponent implements OnInit {
 
   deleteProject(project: Project) {
     this.projectService.deleteProject(project).pipe(first()).subscribe(...this.defaultSubscribe);
+  }
+
+  addUserToProject(project: Project) {
+    this.projectService.addUserToProject(project, this.addUserToProjectNames[project.id])
+      .subscribe(data => {
+        this.addUserToProjectNames[project.id] = '';
+      }, console.error);
   }
 
 }
