@@ -4,6 +4,9 @@
 </select>
 
 <h1><b>Step 2</b>: Add agent</h1>
+To install, run on machine you want to track:
+<code>curl {{ window.location.protocol + '//' + window.location.host + '/api/v1/install?token='  + selectedProject  + ' | sh' }}</code>
+Then edit config file at <pre>/sm/config.json</pre> and run <pre>/sm/agent</pre>
 
 <h1><b>OR</b>: Add HTTP endpoint tracking</h1>
 <div class="add-endpoint-form">

@@ -6,6 +6,7 @@ import { PageTitleService, AgentService, UserDataService } from '../_services';
 export class AddAgentComponent implements OnInit {
 
   Object = Object;
+  window = window;
 
   endpointToTrack = '';
   endpointName = '';

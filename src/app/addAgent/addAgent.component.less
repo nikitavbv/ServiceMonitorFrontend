@@ -1,17 +1,17 @@
 @import "../variables.less";
-
 h1 {
-  font-family: 'Open Sans';
-  color: @headerColor;
-  padding: 10px 0;
-  margin: 0;
-  width: 100%;
-  font-weight: 500;
-  font-size: 18pt;
-  user-select: none;
+    font-family: 'Open Sans';
+    color: @headerColor;
+    padding: 10px 0;
+    margin: 0;
+    width: 100%;
+    font-weight: 500;
+    font-size: 18pt;
+    user-select: none;
 }
 
-input, select {
+input,
+select {
     display: inline-block;
     width: 300px;
     background-color: @lightBackgroundColor;
@@ -24,13 +24,14 @@ input, select {
     outline: none;
     color: @primaryColor;
     margin-right: 8px;
-  }
-  
-  input:focus, .select:focus {
+}
+
+input:focus,
+.select:focus {
     border-color: @primaryColor;
-  }
-  
-  button {
+}
+
+button {
     cursor: pointer;
     display: inline-block;
     transition: background-color 0.4s ease-out, color 0.4s ease-out;
@@ -47,10 +48,23 @@ input, select {
     border-radius: 3px;
     border: 1px solid @primaryColor;
     outline: none;
-  }
-  
-  button:hover {
+}
+
+button:hover {
     color: #212121;
     background-color: @lightElementColor;
-  }
-  
+}
+
+pre {
+  display: inline-block;
+  background-color: lighten(#eee, 2%);
+  padding: 4px;
+}
+
+code {
+  display: block;
+  background-color: lighten(#eee, 2%);
+  padding: 4px;
+  margin: 12px 0 4px 0;
+  user-select: all;
+}
