@@ -48,7 +48,7 @@ export function getMetricSummaryFor(metricData) {
 }
 
 function getMemoryMetricSummary(metricData) {
-    return byteSizeToStr((metricData.total - metricData.free)*1024, 1024) + 
+    return byteSizeToStr((metricData.total - metricData.available)*1024, 1024) + 
         '/' + byteSizeToStr(metricData.total*1024, 1024);
 }
 
