@@ -1,9 +1,9 @@
 <div *ngFor="let project of (queryString.replace(' ', '') === '' ? userData.projects : [])" class="metric-list">
   <h1 *ngIf="project.starredMetrics.length > 0">{{ project.name }}</h1>
   <div *ngFor="let metricID of project.starredMetrics" class="metric" (click)="openMetricPage(getAgentByMetricID(metricID).id, metricID)">
-    <div class="metric-name">{{ getMetricNameByType(getMetricByID(metricID).type) }}<span class="metric-agent">@Ubuntu 18.04.1 LTS</span></div>
+    <div class="metric-name">{{ getMetricNameByType(getMetricByID(metricID).type) }}<span class="metric-agent">@{{ getAgentByMetricID(metricID).name }}</span></div>
     <div class="metric-summary">{{ getMetricSummaryFor(getMetricByID(metricID)) }}</div>
-    <div (click)="unstarMetric(getAgentByMetricID(metricID).id, getMetricByID(metricID), $event);" class="fa fa-star"></div>
+    <div (click)="unstarMetric(getAgentByMetricID(metricID).projectID, getMetricByID(metricID), $event);" class="fa fa-star"></div>
   </div>
 </div>
 
@@ -41,7 +41,7 @@
       <div *ngFor="let metricType of Object.keys(agent.metrics)" (click)="openMetricPage(agent.id, agent.metrics[metricType].id)" class="agent-metric">
         <div class="agent-metric-name">{{ getMetricNameByType(metricType) }}</div>
         <div class="agent-metric-summary">{{ getMetricSummaryFor(agent.metrics[metricType]) }}</div>
-        <div (click)="isStarredMetric(agent.metrics[metricType]) ? unstarMetric(agent.id, agent.metrics[metricType], $event) : starMetric(agent.id, agent.metrics[metricType], $event);" class="fa-star" [ngClass]="{'far': !isStarredMetric(agent.metrics[metricType]), 'fa': isStarredMetric(agent.metrics[metricType]) }"></div>
+        <div (click)="isStarredMetric(agent.metrics[metricType]) ? unstarMetric(agent.projectID, agent.metrics[metricType], $event) : starMetric(agent.projectID, agent.metrics[metricType], $event);" class="fa-star" [ngClass]="{'far': !isStarredMetric(agent.metrics[metricType]), 'fa': isStarredMetric(agent.metrics[metricType]) }"></div>
       </div>
     </div>
   </div>

@@ -1,4 +1,4 @@
-<div *ngIf="metric">
+<div *ngIf="metric && history.length > 0" class="metric-page">
     <h1>{{ getMetricNameByType(metric.type) }}<span class="agent-name">@{{ metric.agent.name }}</span></h1>
     <h2>Current state <span class="state-timestamp">{{ currentStateTimestamp }}</span></h2>
     <div class="metric-state">
@@ -12,7 +12,39 @@
         <option *ngFor="let field of Object.keys(this.chartData)" [value]="field">{{ field }}</option>
     </select>
     <div id="metricChart" *ngIf="metric.type !== 'uptime' && metric.type !== 'docker'"></div>
+    <h2>Raw</h2>
+    <code>
+        {{ json.stringify(history[history.length - 1]) }}
+    </code>
+    <h2>Alerts</h2>
+    <div class="alert-data">
+        <div *ngFor="let alert of alerts" class="alert">
+            <div class="alert-condition">
+                {{ alert.paramName }} {{ alert.alertCondition }} {{ alert.level }}
+            </div>
+            <div class="alert-action">
+                {{ alert.action }}
+            </div>
+            <div (click)="deleteAlert(alert)" class="alert-delete-btn fa fa-trash">
+            </div>
+        </div>
+    </div>
+    <button (click)="addingAlert=true" *ngIf="!addingAlert" class="add-alert-btn">Add alert</button>
+    <div class="add-alert-panel" *ngIf="addingAlert">
+        <input [(ngModel)]="newAlertParameterName" placeholder="Parameter name" />
+        <select [(ngModel)]="newAlertCondition">
+            <option value=">">above</option>
+            <option value="<">below</option>
+        </select>
+        <input [(ngModel)]="newAlertConditionLevel" placeholder="value" />
+        <input [(ngModel)]="newAlertAction" placeholder="Action (webhook url)" class="action-input" />
+        <button (click)="createAlert()">Add</button>
+    </div>
 </div>
-<div *ngIf="metric === undefined">
+<div *ngIf="metric && history.length === 0" class="metric-page">
+    <h1>{{ getMetricNameByType(metric.type) }}<span class="agent-name">@{{ metric.agent.name }}</span></h1>
+    No data available
+</div>
+<div *ngIf="metric === undefined" class="metric-page">
     <h1>Loading...</h1>
 </div>

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { PageTitleService, AgentService, MetricService } from '../_services';
-import { Metric } from '../_models';
+import { PageTitleService, AgentService, MetricService, AlertService } from '../_services';
+import { Metric, Alert } from '../_models';
 
 import {
     getMetricNameByType
@@ -13,8 +13,8 @@ declare let Highcharts: any;
 @Component({ templateUrl: 'metric.component.html', styleUrls: ['metric.component.less'] })
 export class MetricComponent implements OnInit {
 
-    private agentID: string;
-    private metricID: string;
+    private agentID: number;
+    private metricID: number;
     private metric: Metric;
     private currentState: any;
     private currentStateTimestamp: any;
@@ -24,41 +24,54 @@ export class MetricComponent implements OnInit {
     private chartData: any = {};
     private fields = [];
     private _selectedDataset = '';
+    private alerts: Alert[];
+    private addingAlert: boolean = false;
+    private newAlertParameterName: string = '';
+    private newAlertCondition: string = '>';
+    private newAlertConditionLevel: string = '';
+    private newAlertValue: string = '';
+    private newAlertAction: string = '';
 
     private MAX_CHART_POINTS = 1000;
 
     Object = Object;
+    json = JSON;
     getMetricNameByType = getMetricNameByType;
 
     constructor(
         private pageTitle: PageTitleService,
         private route: ActivatedRoute,
         private agentService: AgentService,
-        private metricService: MetricService
+        private metricService: MetricService,
+        private alertService: AlertService,
     ) { }
 
     ngOnInit() {
         this.pageTitle.setPageTitle('Metric');
         this.route.params.subscribe(params => {
-            this.agentID = params.agentID;
-            this.metricID = params.metricID;
+            this.agentID = parseInt(params.agentID);
+            this.metricID = parseInt(params.metricID);
 
             this.metricService.getMetric(
-                parseInt(this.metricID),
+                this.metricID,
                 this.getYesterday().getTime(),
                 new Date().getTime(),
                 this.MAX_CHART_POINTS
             ).subscribe(data => {
                 this.metric = data.metric;
-                this.currentState = this.createCurrentState(this.metric.type, data.history[data.history.length - 1]);
-                this.currentStateTimestamp = this.formatDate(new Date(data.history[data.history.length - 1]['timestamp']));
-                delete this.currentState['id'];
-                delete this.currentState['timestamp'];
-                delete this.currentState['type'];
                 this.history = data.history;
-                this.createChartData();
-                if (this.initDone && !this.chart) {
-                    setTimeout(this.createChart.bind(this), 100);
+                this.alerts = data.alerts.map(alert => Object.assign(new Alert(), alert));
+
+                if (this.history.length > 0) {
+                    this.currentState = this.createCurrentState(this.metric.type, data.history[data.history.length - 1]);
+                    this.currentStateTimestamp = this.formatDate(new Date(data.history[data.history.length - 1]['timestamp']));
+                    delete this.currentState['id'];
+                    delete this.currentState['timestamp'];
+                    delete this.currentState['type'];
+                    this.createChartData();
+                    if (this.initDone && !this.chart) {
+                        setTimeout(this.createChart.bind(this), 100);
+                    }
                 }
             }, console.error);
         });
@@ -71,6 +84,30 @@ export class MetricComponent implements OnInit {
             }
         }
         this.initDone = true;
+    }
+
+    createAlert() {
+        this.addingAlert = false;
+        this.alertService.addAlert(
+            this.agentID, this.metricID, this.newAlertParameterName, 
+            this.newAlertCondition, parseInt(this.newAlertConditionLevel), 
+            this.newAlertAction
+        ).subscribe(data => {
+            this.alerts.push(new Alert(
+                data.id, 
+                this.newAlertParameterName, 
+                this.newAlertCondition, 
+                this.newAlertConditionLevel, 
+                this.newAlertAction
+            ));
+        }, console.error);
+    }
+
+    deleteAlert(alert: Alert) {
+        this.alertService.deleteAlert(alert.id)
+            .subscribe(data => {
+                this.alerts.splice(this.alerts.indexOf(alert), 1);
+            }, console.error);
     }
 
     getMetricValueDescription(metricType, key, value) {

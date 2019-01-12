@@ -5,3 +5,4 @@ export * from './project.service';
 export * from './agent.service';
 export * from './metric.service';
 export * from './search.service';
+export * from './alert.service';

@@ -1,6 +1,6 @@
 <h1>Projects</h1>
 <div class="projects-list">
-  <div *ngFor="let project of userDataService.projects" class="project" class="project" [ngClass]="{'expanded': expandedProjectID === project.id}">
+  <div *ngFor="let project of userDataService.projects" class="project" [ngClass]="{'expanded': expandedProjectID === project.id}">
     <div class="project-top-info" (click)="showProjectExpanded(project)">
       <div class="project-name">{{ project.name }}</div>
       <div class="project-id">{{ project.apiKey }}</div>

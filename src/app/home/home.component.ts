@@ -71,14 +71,14 @@ export class HomeComponent implements OnInit {
         return false;
     }
 
-    starMetric(agentID: number, metric: Metric, event) {
+    starMetric(projectID: number, metric: Metric, event) {
         event.stopPropagation();
-        this.projectService.starMetric(agentID, metric).subscribe((data) => {}, error => console.error(error));
+        this.projectService.starMetric(projectID, metric).subscribe((data) => {}, error => console.error(error));
     }
 
-    unstarMetric(agentID: number, metric: Metric, event) {
+    unstarMetric(projectID: number, metric: Metric, event) {
         event.stopPropagation();
-        this.projectService.unstarMetric(agentID, metric).subscribe((data) => {}, console.error);
+        this.projectService.unstarMetric(projectID, metric).subscribe((data) => {}, console.error);
     }
 
     getMetricByID(metricID): Metric {

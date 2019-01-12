@@ -1,0 +1,16 @@
+<h1>Alerts</h1>
+<div class="alerts-list">
+    <div *ngFor="let alert of alerts" class="alert">
+        <div (click)="openMetric(alert.metric)" class="alert-metric">
+            {{ getMetricNameByType(alert.metric.type) }}<span class="alert-metric-agent">@{{ alert.metric.agent.name }}</span>
+        </div>
+        <div class="alert-name">
+            {{ alert.paramName }} {{ alert.alertCondition }} {{ alert.level }}
+        </div>
+        <div class="alert-action">
+            {{ alert.action }}
+        </div>
+        <div (click)="deleteAlert(alert)" class="alert-delete-btn fa fa-trash">
+        </div>
+    </div>
+</div>

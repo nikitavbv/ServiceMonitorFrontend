@@ -16,6 +16,7 @@ import {
   ProjectService,
   UserDataService,
   SearchService,
+  AlertService,
 } from './_services';
 
 import { HeaderComponent } from './_shared';
@@ -28,6 +29,7 @@ import { SettingsComponent } from './settings';
 import { SetupComponent } from './setup';
 import { LoginComponent } from './login';
 import { MetricComponent } from './metric';
+import { AlertComponent } from './alert';
 
 if (environment.production) {
   enableProdMode();
@@ -46,7 +48,8 @@ if (environment.production) {
     SetupComponent,
     LoginComponent,
     MetricComponent,
-    SetupComponent
+    SetupComponent,
+    AlertComponent,
   ],
   imports: [
     BrowserModule,
@@ -64,6 +67,7 @@ if (environment.production) {
     PageTitleService,
     ProjectService,
     SearchService,
+    AlertService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,

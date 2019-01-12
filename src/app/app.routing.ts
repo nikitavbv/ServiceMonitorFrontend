@@ -9,6 +9,7 @@ import { LoginComponent } from './login';
 import { MetricComponent } from './metric';
 import { AuthGuard } from './_guards';
 import { SettingsComponent } from './settings';
+import { AlertComponent } from './alert';
 
 const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -23,6 +24,8 @@ const appRoutes: Routes = [
 
     { path: 'agent/:agentID', component: AgentComponent, canActivate: [AuthGuard] },
     { path: 'agent/:agentID/metric/:metricID', component: MetricComponent, canActivate: [AuthGuard] },
+
+    { path: 'alerts', component: AlertComponent, canActivate: [AuthGuard] },
 
     // otherwise redirect to home
     { path: '**', redirectTo: '' }
