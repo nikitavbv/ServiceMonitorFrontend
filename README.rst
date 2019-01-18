@@ -8,8 +8,6 @@ Service Monitor Frontend
 
 Angular frontend for ServiceMonitor_ (application performance monitoring)
 
-Currently in development.
-
 ======
 
 This is built with ``ng build`` and can be served by NGINX or ServiceMonitor backend directly.
