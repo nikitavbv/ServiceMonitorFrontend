@@ -3,8 +3,8 @@
 @firstColumnPadding: 27px;
 @secondColumnWidth: 200px;
 @thirdColumnWidth: 300px;
-
-h1, h2 {
+h1,
+h2 {
     margin: 0;
     font-family: 'Open Sans';
     color: @headerColor;
@@ -25,75 +25,68 @@ h2 {
 }
 
 .alerts-list {
-    box-sizing: border-box;
-    width: 100%;
-    color: @primaryColor;
-
-    .alert {
-        border: 1px solid @tableEdgeColor;
-        box-shadow: 1px 2px 4px rgba(0, 0, 0, .03);
-        font-size: 16px;
-        line-height: 50px;
-        border-bottom: 0;
-        font-weight: 500;
-        transition: box-shadow 0.4s ease-out;
-
-        .alert-metric {
-            display: inline-block;
-            padding-left: 27px;
-            width: @firstColumnWidth;
-            vertical-align: middle;
-            text-overflow: ellipsis;
-            overflow: hidden;
-            white-space: nowrap;
-            cursor: pointer;
-
-            .alert-metric-agent {
-                color: @lowPriorityTextColor;
-            }
-        }
-      
-        .alert-name, .alert-action {
-            padding-left: 4px;
-            display: inline-block;
-            vertical-align: middle;
-            text-overflow: ellipsis;
-            overflow: hidden;
-            white-space: nowrap;
-        }
-
-        .alert-name {
-            width: @secondColumnWidth;
-        }
-
-        .alert-action {
-            width: @thirdColumnWidth;
-        }
-      
-        .alert-delete-btn {
-            float: right;
-            margin-right: 32px;
-            line-height: 50px;
-            opacity: 0;
-            transition: opacity 0.4s ease-out;
-            cursor: pointer;
-        }
+  box-sizing: border-box;
+  width: 100%;
+  color: @primaryColor;
+  .alert {
+    border: 1px solid @tableEdgeColor;
+    box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.03);
+    font-size: 16px;
+    line-height: 50px;
+    border-bottom: 0;
+    font-weight: 500;
+    transition: box-shadow 0.4s ease-out;
+    .alert-metric {
+      display: inline-block;
+      padding-left: 27px;
+      width: @firstColumnWidth;
+      vertical-align: middle;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      cursor: pointer;
+      .alert-metric-agent {
+        color: @lowPriorityTextColor;
+      }
+    }
+    .alert-name,
+    .alert-action {
+      padding-left: 4px;
+      display: inline-block;
+      vertical-align: middle;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .alert-name {
+      width: @secondColumnWidth;
+    }
+    .alert-action {
+      width: @thirdColumnWidth;
     }
 
-    .alert:first-of-type {
-        border-radius: 3px 3px 0;
+    .alert-delete-btn {
+      float: right;
+      margin-right: 32px;
+      line-height: 50px;
+      opacity: 0;
+      transition: opacity 0.4s ease-out;
+      cursor: pointer;
     }
-    
-    .alert:last-of-type {
-        border-radius: 0 0 3px 3px;
-        border-bottom: 1px solid @tableEdgeColor;
-    }
-    
-    .alert:hover {
-        box-shadow: 9px 6px 12px rgba(0, 0, 0, .09);
+  }
+  .alert:first-of-type {
+    border-radius: 3px 3px 0;
+  }
 
-        .alert-delete-btn {
-            opacity: 1;
-        }
+  .alert:last-of-type {
+    border-radius: 0 0 3px 3px;
+    border-bottom: 1px solid @tableEdgeColor;
+  }
+
+  .alert:hover {
+    box-shadow: 9px 6px 12px rgba(0, 0, 0, 0.09);
+    .alert-delete-btn {
+      opacity: 1;
     }
+  }
 }
