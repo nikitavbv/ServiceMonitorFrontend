@@ -4,7 +4,8 @@
 @firstColumnPadding: 27px;
 @starWidth: 40px;
 
-h1, h2 {
+h1,
+h2 {
   font-family: 'Open Sans';
   color: @headerColor;
   padding: 10px 0;
@@ -17,30 +18,30 @@ h1, h2 {
 
 input,
 select {
-    display: inline-block;
-    width: 300px;
-    background-color: @lightBackgroundColor;
-    border-radius: 2px;
-    padding: 8px;
-    border: 1px solid @edgeColor;
-    font-weight: 100;
-    font-size: 14pt;
-    transition: border 0.4s ease-out;
-    outline: none;
-    color: @primaryColor;
-    margin-right: 8px;
+  display: inline-block;
+  width: 300px;
+  background-color: @lightBackgroundColor;
+  border-radius: 2px;
+  padding: 8px;
+  border: 1px solid @edgeColor;
+  font-weight: 100;
+  font-size: 14pt;
+  transition: border 0.4s ease-out;
+  outline: none;
+  color: @primaryColor;
+  margin-right: 8px;
 }
 
 input:focus,
 .select:focus {
-    border-color: @primaryColor;
+  border-color: @primaryColor;
 }
 
 code {
   display: block;
   background-color: lighten(#eee, 2%);
   padding: 4px;
-  margin: 12px 0 4px 0;
+  margin: 12px 0 4px;
   user-select: all;
   word-wrap: break-word;
 }
@@ -79,7 +80,7 @@ button:hover {
 
   .metric-state-param {
     border: 1px solid @tableEdgeColor;
-    box-shadow: 1px 2px 4px rgba(0,0,0,.03);
+    box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.03);
     font-size: 16px;
     line-height: 50px;
     border-bottom: 0;
@@ -112,7 +113,7 @@ button:hover {
   }
 
   .metric-state-param:hover {
-    box-shadow: 9px 6px 12px rgba(0,0,0,.09);
+    box-shadow: 9px 6px 12px rgba(0, 0, 0, 0.09);
   }
 }
 
@@ -133,7 +134,6 @@ button:hover {
     border-bottom: 0;
     font-weight: 500;
     transition: box-shadow 0.4s ease-out;
-
 
     .alert-condition {
       display: inline-block;
@@ -170,8 +170,8 @@ button:hover {
   }
 
   .alert:hover {
-    box-shadow: 9px 6px 12px rgba(0,0,0,.09);
-    
+    box-shadow: 9px 6px 12px rgba(0, 0, 0, 0.09);
+
     .alert-delete-btn {
       opacity: 1;
     }
@@ -179,12 +179,12 @@ button:hover {
 }
 
 .add-alert-btn {
-  margin: 18px auto 0 auto;
+  margin: 18px auto 0;
   display: block;
 }
 
 .add-alert-panel {
-  margin: 18px auto 0 auto;
+  margin: 18px auto 0;
   width: fit-content;
 
   input, select {
@@ -197,7 +197,7 @@ button:hover {
     margin-bottom: 16px;
     width: 766px;
   }
-  
+
   button {
     width: 766px;
   }

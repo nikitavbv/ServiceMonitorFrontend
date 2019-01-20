@@ -4,7 +4,8 @@
 @secondColumnWidth: 300px;
 @starWidth: 40px;
 
-h1, h2 {
+h1,
+h2 {
   font-family: 'Open Sans';
   color: @headerColor;
   padding: 10px 0;
@@ -118,17 +119,21 @@ button:hover {
   opacity: 0;
   pointer-events: none;
   transition: all 0.4s ease-out;
+
   .agent-metric {
     display: block;
     color: @primaryColor;
     cursor: pointer;
   }
+
   .agent-metric-name {
     width: calc(@firstColumnWidth - @firstColumnPadding);
   }
+
   .agent-metric-summary {
     width: @secondColumnWidth;
   }
+
   .agent-metric-name,
   .agent-metric-summary {
     display: inline-block;
@@ -137,11 +142,13 @@ button:hover {
     overflow: hidden;
     white-space: nowrap;
   }
+
   .fa-star {
     opacity: 0;
     transition: all 0.4s ease-out;
     cursor: pointer;
   }
+
   .agent-metric:hover {
     .fa-star {
       opacity: 1;
@@ -153,6 +160,7 @@ button:hover {
   display: block;
   padding-top: 8px;
   padding-bottom: 16px;
+
   .agent-tag {
     display: inline;
     background-color: @tagColor;
@@ -182,14 +190,16 @@ button:hover {
   color: @primaryColor;
   user-select: none;
   cursor: pointer;
+
   .metric {
     border: 1px solid @tableEdgeColor;
-    box-shadow: 1px 2px 4px rgba(0, 0, 0, .03);
+    box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.03);
     font-size: 16px;
     line-height: 50px;
     border-bottom: 0;
     font-weight: 500;
     transition: box-shadow 0.4s ease-out;
+
     .metric-name {
       display: inline-block;
       padding-left: 27px;
@@ -198,25 +208,30 @@ button:hover {
       text-overflow: ellipsis;
       overflow: hidden;
       white-space: nowrap;
+
       .metric-agent {
         color: @lowPriorityTextColor;
       }
     }
+
     .metric-summary {
       padding-left: 4px;
       width: @secondColumnWidth;
       display: inline-block;
     }
   }
+
   .metric:first-of-type {
     border-radius: 3px 3px 0;
   }
+
   .metric:last-of-type {
     border-radius: 0 0 3px 3px;
     border-bottom: 1px solid @tableEdgeColor;
   }
+
   .metric:hover {
-    box-shadow: 9px 6px 12px rgba(0, 0, 0, .09);
+    box-shadow: 9px 6px 12px rgba(0, 0, 0, 0.09);
   }
 }
 
