@@ -24,7 +24,7 @@ export class ProjectsComponent implements OnInit {
   constructor(
     private pageTitle: PageTitleService,
     private projectService: ProjectService,
-    private userDataService: UserDataService
+    userDataService: UserDataService
   ) {}
 
   ngOnInit() {

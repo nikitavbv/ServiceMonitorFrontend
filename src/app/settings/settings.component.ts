@@ -5,9 +5,9 @@ import { PageTitleService, AuthenticationService } from '../_services';
 @Component({templateUrl: 'settings.component.html', styleUrls: ['settings.component.less']})
 export class SettingsComponent implements OnInit {
 
-    private newUserName: string = '';
-    private newUserPassword: string = '';
-    private newUserPasswordRepeat: string = '';
+    newUserName: string = '';
+    newUserPassword: string = '';
+    newUserPasswordRepeat: string = '';
 
     constructor(
         private pageTitle: PageTitleService,

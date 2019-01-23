@@ -39,7 +39,7 @@ export class HomeComponent implements OnInit {
     constructor(
         private router: Router,
         private pageTitle: PageTitleService, 
-        private userData: UserDataService,
+        userData: UserDataService,
         private projectService: ProjectService,
         private searchService: SearchService,
     ) {}

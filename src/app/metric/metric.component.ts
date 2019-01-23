@@ -15,16 +15,16 @@ export class MetricComponent implements OnInit {
 
     private agentID: number;
     private metricID: number;
-    private metric: Metric;
+    metric: Metric;
     private currentState: any;
     private currentStateTimestamp: any;
     private chart: any;
-    private history: any;
+    history: any;
     private initDone = false;
     private chartData: any = {};
     private fields = [];
     private _selectedDataset = '';
-    private alerts: Alert[];
+    alerts: Alert[];
     private addingAlert: boolean = false;
     private newAlertParameterName: string = '';
     private newAlertCondition: string = '>';

@@ -11,7 +11,7 @@ import {
 @Component({'templateUrl': 'alert.component.html', styleUrls: ['alert.component.less']})
 export class AlertComponent implements OnInit {
 
-    private alerts: Alert[];
+    alerts: Alert[];
 
     getMetricNameByType = getMetricNameByType;
 

@@ -18,7 +18,7 @@ export class AgentComponent implements OnInit {
     json = JSON;
 
     private agentID: string;
-    private agent: Agent;
+    agent: Agent;
     private newAgentName: string;
     private newTagName: string;
 
