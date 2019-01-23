@@ -39,7 +39,7 @@ export class HomeComponent implements OnInit {
     constructor(
         private router: Router,
         private pageTitle: PageTitleService, 
-        userData: UserDataService,
+        public userData: UserDataService,
         private projectService: ProjectService,
         private searchService: SearchService,
     ) {}
@@ -84,7 +84,7 @@ export class HomeComponent implements OnInit {
     getMetricByID(metricID): Metric {
         for (let agent of this.userData.agents) {
             for (let metric of Object.values(agent.metrics)) {
-                if (metric.id === metricID) {
+                if (metric['id'] === metricID) {
                     return metric;
                 }
             }
@@ -94,7 +94,7 @@ export class HomeComponent implements OnInit {
     getAgentByMetricID(metricID): Agent {
         for (let agent of this.userData.agents) {
             for (let metric of Object.values(agent.metrics)) {
-                if (metric.id === metricID) {
+                if (metric['id'] === metricID) {
                     return agent;
                 }
             }
