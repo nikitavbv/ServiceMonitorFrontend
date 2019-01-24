@@ -15,7 +15,7 @@ export class AddAgentComponent implements OnInit {
   constructor(
     private pageTitle: PageTitleService, 
     private agentService: AgentService,
-    private userData: UserDataService,
+    public userData: UserDataService,
     private router: Router) {}
 
   ngOnInit() {
